@@ -20,6 +20,20 @@ namespace PUTVision_CameraBase
         {
             this.filenamePrefix = "img_" + this.cameraName + "_";
         }
+
+        public abstract void Open();
+        public abstract void Capture(int _imageNumber, bool _enableImageSave, bool _enableImageShow);
+        public abstract void Close();
+
+        public event PUTVision_Utils.LogHandler Log;
+        protected void FireEvent_Log(string msg)
+        {
+            if (Log != null)
+            {
+                PUTVision_Utils.LogEventArgs e = new PUTVision_Utils.LogEventArgs(msg);
+                Log(null, e);
+            }
+        }
     }
 }
 

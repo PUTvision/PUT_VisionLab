@@ -13,8 +13,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraBasler", "CameraBasle
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8961F94B-8A85-49C4-BBBF-A9E1B463AA83}"
 	ProjectSection(SolutionItems) = preProject
+		_Libraries\PointGrey_FlyCapture\FlyCapture2Managed_v100.dll = _Libraries\PointGrey_FlyCapture\FlyCapture2Managed_v100.dll
 		_Libraries\Basler_Pylon\PylonC.NET.dll = _Libraries\Basler_Pylon\PylonC.NET.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraPointGrey", "CameraPointGrey\CameraPointGrey.csproj", "{245D2BB2-74F5-4841-A944-8A06ECB04F9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUTVision_Utils", "PUTVision_Utils\PUTVision_Utils.csproj", "{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCamera", "TestCamera\TestCamera.csproj", "{FCA4C607-86EB-47D3-955C-2C4075016A81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +45,18 @@ Global
 		{89A3B507-78DB-47FC-9730-F487E5AABB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89A3B507-78DB-47FC-9730-F487E5AABB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89A3B507-78DB-47FC-9730-F487E5AABB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245D2BB2-74F5-4841-A944-8A06ECB04F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245D2BB2-74F5-4841-A944-8A06ECB04F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245D2BB2-74F5-4841-A944-8A06ECB04F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245D2BB2-74F5-4841-A944-8A06ECB04F9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
