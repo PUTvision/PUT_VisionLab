@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUT_VisionLab", "PUT_VisionLab\PUT_VisionLab.csproj", "{0EBE2D82-919F-4CBD-B545-23B84D3C3437}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUTVision_Utils", "PUTVision_Utils\PUTVision_Utils.csproj", "{071E6A2B-C2A6-4F62-8FE8-8BF10ADCB192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCamera", "TestCamera\TestCamera.csproj", "{FCA4C607-86EB-47D3-955C-2C4075016A81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalibracjaKamery", "KalibracjaKamery_11-12\KalibracjaKamery\KalibracjaKamery.csproj", "{5D630C89-3056-4E71-AD95-E6CAB097F505}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
