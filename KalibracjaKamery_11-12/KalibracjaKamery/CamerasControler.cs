@@ -32,6 +32,10 @@ namespace KalibracjaKamery
         bool pulseBit = false;
         string note = "";
 
+        bool flagSave = false;
+        bool flagWriteToDisk = false;
+        byte[] imageToSave;
+
         public CamerasControler()
         {
 
@@ -370,6 +374,13 @@ namespace KalibracjaKamery
                         /* Display image */
                         Pylon.ImageWindowDisplayImage<Byte>(woIndex, buffer, grabResult[woIndex]);
                         imgBuf = buffer;
+
+                        if (flagSave == true)
+                        {
+                            imageToSave = (byte[])imgBuf.Array.Clone();
+                            flagSave = false;
+                            flagWriteToDisk = true;
+                        }
                         
                     }
                     else if (grabResult[woIndex].Status == EPylonGrabStatus.Failed)
@@ -520,55 +531,69 @@ namespace KalibracjaKamery
 
         private void Zdjecie_Click(object sender, EventArgs e)
         {
+            if (flagSave != true)
+            {
+                this.flagSave = true;
+                while(flagWriteToDisk != true)
+                {
+
+                }
+                SaveImage();
+                flagWriteToDisk = false;
+            }
+        }
+
+        private void SaveImage()
+        {
             string gdzieZapisac = nowyFolder + nazwaFolderu.Text;
             System.IO.Directory.CreateDirectory(gdzieZapisac);
             try
             {
-               
-                    if (rozszerzenie.SelectedIndex == 0)
-                    {
-                        Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Bmp, WhereSave(), imgBuf, EPylonPixelType.PixelType_Mono8
-                            , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
-                    }
 
-                    else if (rozszerzenie.SelectedIndex == 1)
-                    {
-                        Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Jpeg, WhereSave(), imgBuf, EPylonPixelType.PixelType_Mono8
-                            , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
-                    }
+                PylonBuffer<byte> pylonBuffer = new PylonBuffer<byte>(imageToSave);
 
-                    else if (rozszerzenie.SelectedIndex == 2)
-                    {
-                        Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Png, WhereSave(), imgBuf, EPylonPixelType.PixelType_Mono8
-                            , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
-                    }
+                if (rozszerzenie.SelectedIndex == 0)
+                {
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Bmp, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                }
 
-                    else if (rozszerzenie.SelectedIndex == 3)
-                    {
-                        Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Tiff, WhereSave(), imgBuf, EPylonPixelType.PixelType_Mono8
-                            , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
-                    }
-                    else
-                    { fotoNR--; }
+                else if (rozszerzenie.SelectedIndex == 1)
+                {
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Jpeg, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                }
+
+                else if (rozszerzenie.SelectedIndex == 2)
+                {
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Png, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                }
+
+                else if (rozszerzenie.SelectedIndex == 3)
+                {
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Tiff, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                }
+                else
+                { fotoNR--; }
 
                 fotoNR++;
                 CheckFileExist();
-                Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.photoIcon)); 
+                Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.photoIcon));
 
                 TimerCallback timerCallback = this.ShowPhotoIcon;
                 System.Threading.Timer ShowIcon = new System.Threading.Timer(timerCallback, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(-1));
-                Console.Beep(800,200);
-                
+                Console.Beep(800, 200);
+
             }
-            catch
+            catch (Exception e)
             {
                 note = "File is not saved!";
                 dangerOverwrite = true;
             }
             zdjecieNumer.Text = Convert.ToString(fotoNR);
-            
         }
-
 
         private void KameraON_Click(object sender, EventArgs e)
         {

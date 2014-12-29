@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUT_VisionLab", "PUT_VisionLab\PUT_VisionLab.csproj", "{0EBE2D82-919F-4CBD-B545-23B84D3C3437}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCamera", "TestCamera\TestCamera.csproj", "{FCA4C607-86EB-47D3-955C-2C4075016A81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalibracjaKamery", "KalibracjaKamery_11-12\KalibracjaKamery\KalibracjaKamery.csproj", "{5D630C89-3056-4E71-AD95-E6CAB097F505}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylon.NETSupportLibrary", "Pylon.NETSupportLibrary\Pylon.NETSupportLibrary.csproj", "{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
