@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PUT_VisionLab
+namespace wifibot_cameras
 {
     static class Program
     {
@@ -16,7 +15,7 @@ namespace PUT_VisionLab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PUT_VisionLab());
+            Application.Run(new frmMain());
         }
     }
 }

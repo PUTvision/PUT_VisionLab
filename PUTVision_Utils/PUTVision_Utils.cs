@@ -21,5 +21,33 @@ namespace PUTVision_Utils
             this.message = _message;
         }
     }
+
+    public class ImageCounter
+    {
+        private int value;
+
+        public int Value
+        {
+            get
+            {
+                return this.value;
+            }
+        }
+
+        public ImageCounter()
+        {
+            this.value = 0;
+        }
+
+        public void Set(int valueNew)
+        {
+            this.value = valueNew;
+        }
+
+        public void Increment(int valueToIncrement)
+        {
+            this.value += valueToIncrement;
+        }
+    }
 }
 
