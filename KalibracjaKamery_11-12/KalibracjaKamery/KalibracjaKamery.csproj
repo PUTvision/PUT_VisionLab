@@ -37,12 +37,16 @@
       <HintPath>C:\Program Files\Basler\pylon 4\pylonc.net\bin\PylonC.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PylonC.NETSupportLibrary">
+      <HintPath>G:\kalibracja 1.2\PanelOsobny\bin\Debug\PylonC.NETSupportLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq">
       <Private>False</Private>
     </Reference>
@@ -104,12 +108,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Pylon.NETSupportLibrary\Pylon.NETSupportLibrary.csproj">
-      <Project>{3eafc9f5-d49f-4f9f-86c8-fbd231b07d2e}</Project>
-      <Name>Pylon.NETSupportLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\alertIcon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +118,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\savingColorIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -19,22 +19,23 @@ namespace KalibracjaKamery
     public partial class CamerasControler : Form
     {
         static PylonBuffer<byte> imgBuf = null;
-        //private ImageProvider m_imageProvider = new ImageProvider(); /* Create one image provider. */
-        static uint rozmiarX = 0;
-        static uint rozmiarY=0;
-        static uint fotoNR = 1;
+        static uint sizeX = 0;
+        static uint sizeY=0;
+        static uint photoNR = 1;
         static bool recording = false;
         static int fps=0;
-        string nowyFolder = System.Environment.CurrentDirectory + "\\";
-        Thread watek;// = new Thread(Nagrywanie);
+        string pathFolder = System.Environment.CurrentDirectory + "\\";
+        Thread watek;
         uint indexForCameraOpenFunction = 0;
-        bool dangerOverwrite = false;
+        bool alertBit = false;
         bool pulseBit = false;
         string note = "";
 
         bool flagSave = false;
         bool flagWriteToDisk = false;
         byte[] imageToSave;
+        bool zoomToFit = true;
+        bool savingTime = false;
 
         public CamerasControler()
         {
@@ -42,10 +43,20 @@ namespace KalibracjaKamery
             InitializeComponent();
             timer1.Interval = 1000;
             timer1.Start();
-            zdjecieNumer.Text = fotoNR.ToString();
+            zdjecieNumer.Text = photoNR.ToString();
             UpdateDeviceList();
-            rozszerzenie.SelectedIndex = 0;
-            //System.IO.Directory.CreateDirectory(nowyFolder);
+            FileFormat.SelectedIndex = 0;
+            ShowSavingPath.Text = pathFolder;
+            NameOfFolder.Text = "";
+            UserPath.Checked = true;
+
+            System.Windows.Forms.ToolTip ToolTipUserPath = new System.Windows.Forms.ToolTip();
+            ToolTipUserPath.SetToolTip(this.UserPath, "In this option\nyou can choose the folder,\nwhere files will be saving.");
+
+            System.Windows.Forms.ToolTip ToolTipStandardPath = new System.Windows.Forms.ToolTip();
+            ToolTipStandardPath.SetToolTip(this.StandardPath, "In this option\nfiles will be saving\nnear this aplication.\nYou can add the folder\nto organize it.");
+
+
         }
         void Nagrywanie()
         {
@@ -365,15 +376,22 @@ namespace KalibracjaKamery
                         }
 
                         /* Perform processing. */
-                        rozmiarX = (uint)grabResult[woIndex].SizeX;
-                        rozmiarY = (uint)grabResult[woIndex].SizeY;
+                        sizeX = (uint)grabResult[woIndex].SizeX;
+                        sizeY = (uint)grabResult[woIndex].SizeY;
                         getMinMax(buffer.Array, grabResult[woIndex].SizeX, grabResult[woIndex].SizeY, out min, out max);
                         Console.WriteLine("Grabbed frame {0} from camera {1} into buffer {2}. Min. val={3}, Max. val={4}",
                             fps, woIndex, bufferIndex, min, max);
 
                         /* Display image */
                         Pylon.ImageWindowDisplayImage<Byte>(woIndex, buffer, grabResult[woIndex]);
+
+                        if (zoomToFit == true)
+                        {
+                            System.Windows.Forms.SendKeys.SendWait("^{MULTIPLY}");
+                            zoomToFit = false;
+                        }
                         imgBuf = buffer;
+                       
 
                         if (flagSave == true)
                         {
@@ -381,7 +399,8 @@ namespace KalibracjaKamery
                             flagSave = false;
                             flagWriteToDisk = true;
                         }
-                        
+                       
+
                     }
                     else if (grabResult[woIndex].Status == EPylonGrabStatus.Failed)
                     {
@@ -464,7 +483,7 @@ namespace KalibracjaKamery
             catch (Exception e)
             {
                 note = "Can not open the camera!";
-                dangerOverwrite = true;
+                alertBit = true;
  
                 /* Retrieve the error message. */
                 string msg = GenApi.GetLastErrorMessage() + "\n" + GenApi.GetLastErrorDetail();
@@ -500,6 +519,7 @@ namespace KalibracjaKamery
 
             }
         }
+
         }
 
         /* Simple "image processing" function returning the minimum and maximum gray 
@@ -545,41 +565,42 @@ namespace KalibracjaKamery
 
         private void SaveImage()
         {
-            string gdzieZapisac = nowyFolder + nazwaFolderu.Text;
-            System.IO.Directory.CreateDirectory(gdzieZapisac);
             try
             {
+                savingTime = true;
+                string whereSave = pathFolder + NameOfFolder.Text;
+                System.IO.Directory.CreateDirectory(whereSave);
 
                 PylonBuffer<byte> pylonBuffer = new PylonBuffer<byte>(imageToSave);
 
-                if (rozszerzenie.SelectedIndex == 0)
+                if (FileFormat.SelectedIndex == 0)
                 {
-                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Bmp, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
-                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Bmp, PathToSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , sizeX, sizeY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
                 }
 
-                else if (rozszerzenie.SelectedIndex == 1)
+                else if (FileFormat.SelectedIndex == 1)
                 {
-                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Jpeg, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
-                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Jpeg, PathToSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , sizeX, sizeY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
                 }
 
-                else if (rozszerzenie.SelectedIndex == 2)
+                else if (FileFormat.SelectedIndex == 2)
                 {
-                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Png, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
-                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Png, PathToSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , sizeX, sizeY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
                 }
 
-                else if (rozszerzenie.SelectedIndex == 3)
+                else if (FileFormat.SelectedIndex == 3)
                 {
-                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Tiff, WhereSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
-                        , rozmiarX, rozmiarY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
+                    Pylon.ImagePersistenceSave(EPylonImageFileFormat.ImageFileFormat_Tiff, PathToSave(), pylonBuffer, EPylonPixelType.PixelType_Mono8
+                        , sizeX, sizeY, 0, EPylonImageOrientation.ImageOrientation_TopDown);
                 }
                 else
-                { fotoNR--; }
+                { photoNR--; }
 
-                fotoNR++;
-                CheckFileExist();
+                photoNR++;
+                
                 Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.photoIcon));
 
                 TimerCallback timerCallback = this.ShowPhotoIcon;
@@ -590,9 +611,9 @@ namespace KalibracjaKamery
             catch (Exception e)
             {
                 note = "File is not saved!";
-                dangerOverwrite = true;
+                alertBit = true;
             }
-            zdjecieNumer.Text = Convert.ToString(fotoNR);
+            zdjecieNumer.Text = Convert.ToString(photoNR);
         }
 
         private void KameraON_Click(object sender, EventArgs e)
@@ -600,16 +621,20 @@ namespace KalibracjaKamery
 
             if (recording == false)
             {
+                recording = true;
                 listaKamer.Enabled = false;
                 refreshListOfCameras.Enabled = false;
-                recording = true;
-                
+            
                 watek = new Thread(Nagrywanie);
                 watek.Start();
-                Zdjecie.Focus();
-                CheckFileExist();
+
+                //System.Windows.Forms.SendKeys.SendWait("^{TAB}");
                 Zdjecie.Enabled = true; 
                 KameraON.Text = "Turn OFF a camera";
+                Zdjecie.Focus();
+                CheckFileExist();
+                TimerCallback timerCallback = this.ChangeWindow;
+                System.Threading.Timer ShowIcon = new System.Threading.Timer(timerCallback, null, TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(-1));
 
             }
 
@@ -623,23 +648,24 @@ namespace KalibracjaKamery
                 KameraON.Text = "Turn ON a selected camera";
                 KameraON.Enabled = false;
                 CheckFileExist();
-                dangerOverwrite = false;
+                alertBit = false;
                 pulseBit = false;
 
             }
             
            
         }
+
+        private void ChangeWindow(object state)
+        {
+            System.Windows.Forms.SendKeys.SendWait("%{TAB}");
+        }
+
         private void ShowPhotoIcon(object state)
         {
-            if (!dangerOverwrite)
-            { 
-                Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.savingColorIcon)); 
-            }
-            else
-            {
-                Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.alertIcon));
-            }
+            savingTime = false;
+           // CheckFileExist();
+       
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -647,16 +673,18 @@ namespace KalibracjaKamery
             textBox1.Text =fps.ToString();
             fps = 0;
             pulseBit = !pulseBit;
-            if (dangerOverwrite && pulseBit)
+            zoomToFit = true;
+            ShowSavingPath.Text = pathFolder;
+            CheckFileExist();
+            if (alertBit && pulseBit)
             {
-                Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.alertIcon));
-                overWrieAlert.Text = note;
-                overWrieAlert.Visible = true;
+                AlertInfo.Text = note;
+                AlertInfo.Visible = true;
 
             }
             else
             {
-                overWrieAlert.Visible = false;
+                AlertInfo.Visible = false;
             }
         }
 
@@ -673,17 +701,17 @@ namespace KalibracjaKamery
         {
             try
             {
-                fotoNR = Convert.ToUInt32(poczatekNumeracji.Text.ToString());
-                zdjecieNumer.Text = Convert.ToString(fotoNR);
+                photoNR = Convert.ToUInt32(poczatekNumeracji.Text.ToString());
+                zdjecieNumer.Text = Convert.ToString(photoNR);
             }
             catch 
             {
 
-                poczatekNumeracji.Text = "Wrong value";
-                zdjecieNumer.Text = Convert.ToString(fotoNR);
+                note = "Wrong value";
+                zdjecieNumer.Text = Convert.ToString(photoNR);
             }
             Zdjecie.Focus();
-            CheckFileExist();
+            
         }
         private void ShowException(Exception e, string additionalErrorMessage)
         {
@@ -759,17 +787,9 @@ namespace KalibracjaKamery
             catch (Exception e)
             {
                 note = "Can not refresh the list of cameras";
-                dangerOverwrite = true;
+                alertBit = true;
                // ShowException(e, m_imageProvider.GetLastErrorMessage());
             }
-        }
-
-        private void resetujNumer_Click(object sender, EventArgs e)
-        {
-            fotoNR = 1;
-            zdjecieNumer.Text = Convert.ToString(fotoNR);
-            Zdjecie.Focus();
-            CheckFileExist();
         }
 
         private void Zdjecie_fokus_ON(object sender, EventArgs e)
@@ -778,7 +798,7 @@ namespace KalibracjaKamery
             {
                 Zdjecie.Focus();
             }
-            CheckFileExist();
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -790,6 +810,13 @@ namespace KalibracjaKamery
 
         }
 
+        private void ResetPhotoNumber_Click(object sender, EventArgs e)
+        {
+            photoNR = 1;
+            zdjecieNumer.Text = Convert.ToString(photoNR);
+            Zdjecie.Focus();
+            
+        }
 
         private void listaKamer_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -809,7 +836,7 @@ namespace KalibracjaKamery
             }
             catch {
                      note = "Camera is not selected";
-                     dangerOverwrite = true;
+                     alertBit = true;
                   }
         }
 
@@ -819,38 +846,38 @@ namespace KalibracjaKamery
             UpdateDeviceList();
         }
 
-        private string WhereSave()
+        private string PathToSave()
         {
-            string gdzieZapisac = nowyFolder + nazwaFolderu.Text;
-            string fotoS = fotoNR.ToString();
+            string whereSave = pathFolder + NameOfFolder.Text;
+            string fotoS = photoNR.ToString();
             int length = fotoS.Length;
             for (int i = 0; i < 4 - length; i++)
             {
                 fotoS = "0" + fotoS;
             }
-            gdzieZapisac += "\\" + nazwaZdjecia.Text + "_" + fotoS + "." + rozszerzenie.SelectedItem.ToString();
-            return gdzieZapisac;
+            whereSave += "\\" + NameOfFile.Text + "_" + fotoS + "." + FileFormat.SelectedItem.ToString();
+            return whereSave;
         }
         private void CheckFileExist()
         {
-            if (KameraON.Enabled == true)
+            if (recording == true)
             {
-                if (File.Exists(WhereSave()))
+                if (File.Exists(PathToSave()) && savingTime == false)
                 {
                     Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.alertIcon));
                     note = "File will be overwritten!";
-                    dangerOverwrite = true;
+                    alertBit = true;
                 }
-                else
+                else if(savingTime == false)
                 {
-                    dangerOverwrite = false;
+                    alertBit = false;
                     Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.savingColorIcon));
 
                 }
             }
             else 
             {
-                dangerOverwrite = false;
+                alertBit = false;
                 Zdjecie.BackgroundImage = ((System.Drawing.Image)(Properties.Resources.saving));
             }
         }
@@ -867,7 +894,7 @@ namespace KalibracjaKamery
 
         private void OpenFileFolder_Click(object sender, EventArgs e)
         {
-            string checkFolder = nowyFolder + nazwaFolderu.Text ;
+            string checkFolder = pathFolder + NameOfFolder.Text ;
             if (Directory.Exists(checkFolder))
             {
                 string windir = Environment.GetEnvironmentVariable("WINDIR");
@@ -878,11 +905,45 @@ namespace KalibracjaKamery
             }
             else 
             {
-                dangerOverwrite = true;
+                alertBit = true;
                 note = "Can not open this folder";
             }
         }
 
+        private void Select_the_folder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = pathFolder;
+            dialog.ShowDialog();
+            ShowSavingPath.Text = dialog.SelectedPath;
+            pathFolder = dialog.SelectedPath;
+        }
+
+        private void UserPath_CheckedChanged(object sender, EventArgs e)
+        {
+
+            NameOfFolder.Text = "";
+            NameOfFolder.Visible = false;
+            openGeneralFolder.Visible = false;
+            OpenFolderTree.Visible = true;
+            
+        }
+
+        private void StandardPath_CheckedChanged(object sender, EventArgs e)
+        {
+            pathFolder = System.Environment.CurrentDirectory + "\\";
+            NameOfFolder.Text = "NewFolder";
+            NameOfFolder.Visible = true;
+            openGeneralFolder.Visible = true;
+            OpenFolderTree.Visible = false;
+            pathFolder = System.Environment.CurrentDirectory + "\\";
+        }
+
+        private void CamerasControler_Load(object sender, EventArgs e)
+        {
+            if (Zdjecie.Enabled == true)
+            { Zdjecie.Focus(); }
+        }
 
     }
 
