@@ -56,6 +56,7 @@
             this.openGeneralFolder = new System.Windows.Forms.Button();
             this.Zdjecie = new System.Windows.Forms.Button();
             this.AlertInfo = new System.Windows.Forms.Label();
+            this.ReverseAxisX = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,11 +75,11 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(45, 583);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBox1.Location = new System.Drawing.Point(51, 607);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(124, 75);
+            this.textBox1.Size = new System.Drawing.Size(120, 50);
             this.textBox1.TabIndex = 2;
             this.textBox1.Tag = "";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -102,7 +103,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(3, 610);
+            this.label1.Location = new System.Drawing.Point(7, 621);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 20);
             this.label1.TabIndex = 4;
@@ -188,7 +189,7 @@
             this.label5.AutoSize = true;
             this.label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(60, 244);
+            this.label5.Location = new System.Drawing.Point(6, 244);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 20);
             this.label5.TabIndex = 15;
@@ -348,13 +349,26 @@
             this.AlertInfo.Name = "AlertInfo";
             this.AlertInfo.Size = new System.Drawing.Size(0, 20);
             this.AlertInfo.TabIndex = 22;
-            this.AlertInfo.Visible = false;
+            // 
+            // ReverseAxisX
+            // 
+            this.ReverseAxisX.AutoSize = true;
+            this.ReverseAxisX.Checked = true;
+            this.ReverseAxisX.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ReverseAxisX.Location = new System.Drawing.Point(11, 583);
+            this.ReverseAxisX.Name = "ReverseAxisX";
+            this.ReverseAxisX.Size = new System.Drawing.Size(108, 17);
+            this.ReverseAxisX.TabIndex = 27;
+            this.ReverseAxisX.Text = "Reverse in axis X";
+            this.ReverseAxisX.UseVisualStyleBackColor = true;
+            this.ReverseAxisX.CheckedChanged += new System.EventHandler(this.ReverseAxisX_CheckedChanged);
             // 
             // CamerasControler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(224, 662);
+            this.Controls.Add(this.ReverseAxisX);
             this.Controls.Add(this.AlertInfo);
             this.Controls.Add(this.Zdjecie);
             this.Controls.Add(this.groupBox1);
@@ -409,6 +423,7 @@
         private System.Windows.Forms.TextBox ShowSavingPath;
         private System.Windows.Forms.RadioButton StandardPath;
         private System.Windows.Forms.RadioButton UserPath;
+        private System.Windows.Forms.CheckBox ReverseAxisX;
     }
 }
 
