@@ -27,8 +27,8 @@ namespace Emgu_Camera
 
         public volatile bool flagReady = true;
 
-        private const int frameToShowWidth = 320;
-        private const int frameToShowHeight = 240;
+        private const int frameToShowWidth = 1200;
+        private const int frameToShowHeight = 900;
 
         public string ExceptionMessage { get; set; }
 

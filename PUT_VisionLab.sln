@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaslerCameraCalibrationTool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaslerCamerasAccquistionTool", "old_BaslerCamerasAccquisitionTool\BaslerCamerasAccquistionTool.csproj", "{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizationTool", "SynchronizationTool\SynchronizationTool.csproj", "{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,16 @@ Global
 		{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50}.Release|Mixed Platforms.Build.0 = Release|x86
 		{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50}.Release|x86.ActiveCfg = Release|x86
 		{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50}.Release|x86.Build.0 = Release|x86
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,5 +186,6 @@ Global
 		{BD7B717A-B72C-4F6C-B052-07CBBC5077CE} = {C7C97643-B39E-4AA2-AA2D-8EC73A2E6A89}
 		{675281C2-F00D-45D8-BF71-2E0825529B0A} = {C7C97643-B39E-4AA2-AA2D-8EC73A2E6A89}
 		{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50} = {C7C97643-B39E-4AA2-AA2D-8EC73A2E6A89}
+		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450} = {C7C97643-B39E-4AA2-AA2D-8EC73A2E6A89}
 	EndGlobalSection
 EndGlobal
