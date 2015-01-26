@@ -8,10 +8,9 @@ using PylonC.NET;
 
 namespace PUTVison_CameraBasler
 {
-    public class CameraBasler : PUTVision_CameraBase.CameraBase, PUTVision_ICamera.ICamera
+    public class CameraBasler : PUTVision_CameraBase.CameraBase
     {
         // maybe in the future add List<Capture> for ability to use more than one camera
-
 
         // const acts like static mebmer of a class
         private const int frameToShowWidth = 320;
@@ -60,8 +59,7 @@ namespace PUTVison_CameraBasler
         // think what to do with specialized open function...
         // (uint packetSize, GainAuto gainAuto, ExposureAuto exposureAuto, int exposureTimeAbs, AutoFunctionProfile autoFunctionProfile, int startingFrameDelay)
 
-        #region ICamer interface implementation
-        // explicit interface implementation is not preffered (i.e. (=tj./tzn. in Polish) with Amin_ICamera.ICamera. prefix) 
+        #region public methods (interface) implementation
 
         // dodać (do ogólnego):
         // int numberOfCameras
@@ -72,6 +70,7 @@ namespace PUTVison_CameraBasler
         public override void Capture(int _imageNumber, bool _enableImageSave, bool _enableImageShow)
         {
         }
+
         public override void Close()
         {
         }
