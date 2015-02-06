@@ -19,7 +19,7 @@ namespace KalibracjaKamery
 
     public partial class Cameras_controler : Form
     {
-        public CameraBasler[] basler;
+        public CameraBasler basler;
         PylonBuffer<Byte> imageToSave=null;
         int modeSelect = 1;
         int fps;
@@ -77,7 +77,7 @@ namespace KalibracjaKamery
                 System.IO.Directory.CreateDirectory(whereSave);
 
                 uint sizeX, sizeY;
-                basler[0].ReturnFrameSize(out sizeX, out sizeY);
+                basler.ReturnFrameSize(out sizeX, out sizeY);
 
                 if (Select_file_format.SelectedIndex == 0)
                 {
@@ -382,13 +382,11 @@ namespace KalibracjaKamery
                     basler = null;
                     Working_cameras.Items.Clear();
                     Checked_List_Box.Items.Clear();
-                    camerasToOpen = new string[List_of_cameras.CheckedItems.Count];
-                    basler = new CameraBasler[List_of_cameras.CheckedItems.Count];
 
-                    for (int i = 0; i < List_of_cameras.CheckedItems.Count; i++)
-                    {
-                        basler[i] = new CameraBasler(basler);
-                    }
+                    camerasToOpen = new string[List_of_cameras.CheckedItems.Count];
+                    basler = new CameraBasler((uint)List_of_cameras.CheckedItems.Count);
+                    basler.NUM_DEVICES = (uint)List_of_cameras.CheckedItems.Count;
+                    basler.wszystkieNazwy = new string[List_of_cameras.CheckedItems.Count];
 
                     for (int i = 0; i < (int)List_of_cameras.CheckedItems.Count; i++)
                     {
@@ -396,15 +394,15 @@ namespace KalibracjaKamery
                         /* Retrieve the device data from the list view item. */
                         DeviceEnumerator.Device camera = selectedCamera.Tag as DeviceEnumerator.Device;
                         camerasToOpen[i] = camera.Name;
-                        basler[i].RenameCamera(camera.Name);
+                        basler.wszystkieNazwy[i]=camera.Name;
 
                         Working_cameras.Items.Add(camera.Name);
                         Checked_List_Box.Items.Add(camera.Name);
-                        basler[i].Recording();
+                        
                         
                         //PYLON_DEVICE_INFO_HANDLE hDi = Pylon.GetDeviceInfoHandle((uint)camera.Index);                    
                     }
-                    
+                    basler.Recording();
                     alertNote = "";
                 }
                 //Mode_select_UP.Enabled = true;
@@ -512,7 +510,11 @@ namespace KalibracjaKamery
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer1.Stop();
-            recording = false;
+            if (basler != null)
+            {
+                basler.permissionToWork = false;
+            }
+
             Pylon.Terminate();
             Environment.Exit(1);
 

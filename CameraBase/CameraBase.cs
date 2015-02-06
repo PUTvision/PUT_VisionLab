@@ -8,8 +8,8 @@ namespace PUTVision_CameraBase
 {
     public abstract class CameraBase
     {
-        protected bool working;
-        protected bool permissionToWork;
+        public bool working=false;
+        public bool permissionToWork=true;
         protected bool colorful;
         protected int cameraNumber;
         public string cameraName;

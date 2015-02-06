@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{402187FF-4B69-44EA-BEC9-492EBD7FF244}</ProjectGuid>
+    <ProjectGuid>{42BC6FB0-8252-4D41-ADE4-C92949D04332}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>put_CameraBase</RootNamespace>
-    <AssemblyName>CameraBase</AssemblyName>
+    <RootNamespace>PUTVision_BaslerCenter</RootNamespace>
+    <AssemblyName>BaslerCenter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,8 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PylonC.NET, Version=4.1.0.0, Culture=neutral, PublicKeyToken=a77e8471c5919d5a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Basler\pylon 4\pylonc.net\bin\PylonC.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,13 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraBase.cs" />
+    <Compile Include="BaslerCenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PUTVision_Utils\PUTVision_Utils.csproj">
-      <Project>{071e6a2b-c2a6-4f62-8fe8-8bf10adcb192}</Project>
-      <Name>PUTVision_Utils</Name>
+    <ProjectReference Include="..\CameraBasler\CameraBasler.csproj">
+      <Project>{89a3b507-78db-47fc-9730-f487e5aabb64}</Project>
+      <Name>CameraBasler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ICamera\ICamera.csproj">
+      <Project>{fd66191d-1920-4415-9df2-5167ae462277}</Project>
+      <Name>ICamera</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

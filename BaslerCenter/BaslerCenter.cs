@@ -10,11 +10,11 @@ using System.Windows;
 
 using PylonC.NET;
 
-namespace PUTVision_CameraBasler
+namespace PUTVision_BaslerCenter
 {
-    public class CameraBasler : PUTVision_CameraBase.CameraBase
+    public class BaslerCenter : PUTVision_CameraBasler.CameraBasler
     {
-        // maybe in the future add List<Capture> for ability to use more than one camera
+     // maybe in the future add List<Capture> for ability to use more than one camera
 
 
         // const acts like static mebmer of a class
@@ -50,13 +50,13 @@ namespace PUTVision_CameraBasler
         public bool savingTime = false;
         public bool reverseInAxisX = true;
 
-        private CameraBasler[] basler;
+        private BaslerCenter[] center;
 
         public uint NUM_DEVICES = 0;
         public string[] wszystkieNazwy;
 
         #region Constructors
-        public CameraBasler(uint NUM_DEV)
+        public BaslerCenter(uint NUM_DEV)
         {
             this.hDev = new PYLON_DEVICE_HANDLE[NUM_DEV];        /* Handles for the pylon devices. */
             for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
@@ -65,33 +65,12 @@ namespace PUTVision_CameraBasler
             }
         }
 
-        public CameraBasler()
-            : this(0, "defaultBasler", 640, 480)
-        {
-            this.working = false;
-        }
+       
 
-        public CameraBasler(int _cameraNumber, string _cameraName, uint _frameWidth, uint _frameHeight)
-        {
-            this.cameraNumber = _cameraNumber;
-            this.cameraName = _cameraName;
-            this.frameWidth = _frameWidth;
-            this.frameHeight = _frameHeight;
-
-            this.PrepareFilename();
-
-            #if DEBUG
-                /* This is a special debug setting needed only for GigE cameras. See 'Building Applications with pylon' in the Programmer's Guide. */
-                Environment.SetEnvironmentVariable("PYLON_GIGE_HEARTBEAT", "300000" /*ms*/);
-            #endif
-
-            Pylon.Initialize();
-        }
-
-        public CameraBasler(CameraBasler[] basler)
+        public BaslerCenter(BaslerCenter[] center)
         {
             // TODO: Complete member initialization
-            this.basler = basler;
+            this.center = center;
         }
         #endregion
 
@@ -105,7 +84,7 @@ namespace PUTVision_CameraBasler
         // int numberOfCameras
         public override void Open()
         {
-            this.fps++;
+           
         }
         public void Start()
         {
