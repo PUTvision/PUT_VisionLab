@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraBase", "CameraBase\CameraBase.csproj", "{402187FF-4B69-44EA-BEC9-492EBD7FF244}"
 EndProject
@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PUTVision_Utils", "PUTVisio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCamera", "TestCamera\TestCamera.csproj", "{FCA4C607-86EB-47D3-955C-2C4075016A81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalibracjaKamery", "KalibracjaKamery_11-12\KalibracjaKamery\KalibracjaKamery.csproj", "{5D630C89-3056-4E71-AD95-E6CAB097F505}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylon.NETSupportLibrary", "Pylon.NETSupportLibrary\Pylon.NETSupportLibrary.csproj", "{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old_projects", "old_projects", "{C7C97643-B39E-4AA2-AA2D-8EC73A2E6A89}"
@@ -36,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaslerCamerasAccquistionTool", "old_BaslerCamerasAccquisitionTool\BaslerCamerasAccquistionTool.csproj", "{8A3FEDDA-3DDD-40ED-BA2B-206C8ADCDF50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizationTool", "SynchronizationTool\SynchronizationTool.csproj", "{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamerasControler", "KalibracjaKamery_11-12\KalibracjaKamery\CamerasControler.csproj", "{5D630C89-3056-4E71-AD95-E6CAB097F505}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,16 +107,6 @@ Global
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FCA4C607-86EB-47D3-955C-2C4075016A81}.Release|x86.ActiveCfg = Release|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|x86.ActiveCfg = Release|Any CPU
 		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EAFC9F5-D49F-4F9F-86C8-FBD231B07D2E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -177,6 +167,16 @@ Global
 		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{380FD11E-DEA8-4E0A-8C10-68D9DE7DA450}.Release|x86.ActiveCfg = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5D630C89-3056-4E71-AD95-E6CAB097F505}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

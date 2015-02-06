@@ -37,9 +37,6 @@
       <HintPath>C:\Program Files\Basler\pylon 4\pylonc.net\bin\PylonC.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PylonC.NETSupportLibrary">
-      <HintPath>G:\kalibracja 1.2\PanelOsobny\bin\Debug\PylonC.NETSupportLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -121,6 +118,24 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CameraBase\CameraBase.csproj">
+      <Project>{402187ff-4b69-44ea-bec9-492ebd7ff244}</Project>
+      <Name>CameraBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CameraBasler\CameraBasler.csproj">
+      <Project>{89a3b507-78db-47fc-9730-f487e5aabb64}</Project>
+      <Name>CameraBasler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ICamera\ICamera.csproj">
+      <Project>{fd66191d-1920-4415-9df2-5167ae462277}</Project>
+      <Name>ICamera</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Pylon.NETSupportLibrary\Pylon.NETSupportLibrary.csproj">
+      <Project>{3eafc9f5-d49f-4f9f-86c8-fbd231b07d2e}</Project>
+      <Name>Pylon.NETSupportLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

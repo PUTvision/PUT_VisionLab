@@ -1,6 +1,6 @@
 ﻿namespace KalibracjaKamery
 {
-    partial class CamerasControler
+    partial class Cameras_controler
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -29,71 +29,75 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.KameraON = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.refreshListOfCameras = new System.Windows.Forms.Button();
+            this.Mode_select_UP = new System.Windows.Forms.Button();
+            this.Display_FPS = new System.Windows.Forms.TextBox();
+            this.Mode_select_DOWN = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.NameOfFolder = new System.Windows.Forms.TextBox();
-            this.NameOfFile = new System.Windows.Forms.TextBox();
-            this.poczatekNumeracji = new System.Windows.Forms.TextBox();
-            this.zacznijOd = new System.Windows.Forms.Button();
-            this.listaKamer = new System.Windows.Forms.ListView();
+            this.Name_of_file = new System.Windows.Forms.TextBox();
+            this.Start_numbering_on = new System.Windows.Forms.TextBox();
+            this.Change_numbering = new System.Windows.Forms.Button();
+            this.List_of_cameras = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.zdjecieNumer = new System.Windows.Forms.Label();
-            this.FileFormat = new System.Windows.Forms.ComboBox();
+            this.Display_photo_number = new System.Windows.Forms.Label();
+            this.Select_file_format = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.ResetPhotoNumber = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ShowSavingPath = new System.Windows.Forms.TextBox();
-            this.UserPath = new System.Windows.Forms.RadioButton();
-            this.OpenFolderTree = new System.Windows.Forms.Button();
+            this.Reset_photo_number = new System.Windows.Forms.Button();
+            this.Saving_group_box = new System.Windows.Forms.GroupBox();
+            this.Show_path_to_saving_folder = new System.Windows.Forms.TextBox();
+            this.User_folder_select = new System.Windows.Forms.RadioButton();
+            this.Open_folder_tree = new System.Windows.Forms.Button();
             this.OpenFileFolder = new System.Windows.Forms.Button();
-            this.StandardPath = new System.Windows.Forms.RadioButton();
+            this.Standard_folder_select = new System.Windows.Forms.RadioButton();
             this.openGeneralFolder = new System.Windows.Forms.Button();
-            this.Zdjecie = new System.Windows.Forms.Button();
+            this.Save_picture = new System.Windows.Forms.Button();
             this.AlertInfo = new System.Windows.Forms.Label();
-            this.ReverseAxisX = new System.Windows.Forms.CheckBox();
-            this.groupBox1.SuspendLayout();
+            this.Reverse_in_axis_X = new System.Windows.Forms.CheckBox();
+            this.Colorful = new System.Windows.Forms.CheckBox();
+            this.tester = new System.Windows.Forms.TextBox();
+            this.Working_cameras = new System.Windows.Forms.ComboBox();
+            this.Checked_List_Box = new System.Windows.Forms.CheckedListBox();
+            this.Saving_group_box.SuspendLayout();
             this.SuspendLayout();
             // 
-            // KameraON
+            // Mode_select_UP
             // 
-            this.KameraON.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.KameraON.Enabled = false;
-            this.KameraON.Location = new System.Drawing.Point(2, 15);
-            this.KameraON.Name = "KameraON";
-            this.KameraON.Size = new System.Drawing.Size(90, 60);
-            this.KameraON.TabIndex = 0;
-            this.KameraON.Text = "Turn ON a selected camera";
-            this.KameraON.UseVisualStyleBackColor = true;
-            this.KameraON.Click += new System.EventHandler(this.KameraON_Click);
+            this.Mode_select_UP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Mode_select_UP.Enabled = false;
+            this.Mode_select_UP.Location = new System.Drawing.Point(2, 15);
+            this.Mode_select_UP.Name = "Mode_select_UP";
+            this.Mode_select_UP.Size = new System.Drawing.Size(90, 60);
+            this.Mode_select_UP.TabIndex = 0;
+            this.Mode_select_UP.Text = "Turn ON";
+            this.Mode_select_UP.UseVisualStyleBackColor = true;
+            this.Mode_select_UP.Click += new System.EventHandler(this.Mode_select_UP_Click);
             // 
-            // textBox1
+            // Display_FPS
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(51, 607);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 50);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Tag = "";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.Click += new System.EventHandler(this.Zdjecie_fokus_ON);
+            this.Display_FPS.Enabled = false;
+            this.Display_FPS.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Display_FPS.Location = new System.Drawing.Point(51, 607);
+            this.Display_FPS.Multiline = true;
+            this.Display_FPS.Name = "Display_FPS";
+            this.Display_FPS.Size = new System.Drawing.Size(120, 50);
+            this.Display_FPS.TabIndex = 2;
+            this.Display_FPS.Tag = "";
+            this.Display_FPS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Display_FPS.Click += new System.EventHandler(this.Save_picture_fokus_ON);
             // 
-            // refreshListOfCameras
+            // Mode_select_DOWN
             // 
-            this.refreshListOfCameras.Location = new System.Drawing.Point(2, 80);
-            this.refreshListOfCameras.Name = "refreshListOfCameras";
-            this.refreshListOfCameras.Size = new System.Drawing.Size(90, 50);
-            this.refreshListOfCameras.TabIndex = 3;
-            this.refreshListOfCameras.Text = "Refresh the list of cameras ";
-            this.refreshListOfCameras.UseVisualStyleBackColor = true;
-            this.refreshListOfCameras.Click += new System.EventHandler(this.refreshListOfCameras_Click);
+            this.Mode_select_DOWN.Location = new System.Drawing.Point(2, 80);
+            this.Mode_select_DOWN.Name = "Mode_select_DOWN";
+            this.Mode_select_DOWN.Size = new System.Drawing.Size(90, 50);
+            this.Mode_select_DOWN.TabIndex = 3;
+            this.Mode_select_DOWN.Text = "Refresh the list of cameras ";
+            this.Mode_select_DOWN.UseVisualStyleBackColor = true;
+            this.Mode_select_DOWN.Click += new System.EventHandler(this.Mode_select_DOWN_Click);
             // 
             // timer1
             // 
@@ -117,42 +121,43 @@
             this.NameOfFolder.TabIndex = 5;
             this.NameOfFolder.Text = "NewFolder";
             // 
-            // NameOfFile
+            // Name_of_file
             // 
-            this.NameOfFile.Location = new System.Drawing.Point(96, 81);
-            this.NameOfFile.Name = "NameOfFile";
-            this.NameOfFile.Size = new System.Drawing.Size(71, 20);
-            this.NameOfFile.TabIndex = 6;
-            this.NameOfFile.Text = "Foto";
+            this.Name_of_file.Location = new System.Drawing.Point(96, 81);
+            this.Name_of_file.Name = "Name_of_file";
+            this.Name_of_file.Size = new System.Drawing.Size(71, 20);
+            this.Name_of_file.TabIndex = 6;
+            this.Name_of_file.Text = "Foto";
             // 
-            // poczatekNumeracji
+            // Start_numbering_on
             // 
-            this.poczatekNumeracji.Location = new System.Drawing.Point(139, 134);
-            this.poczatekNumeracji.Name = "poczatekNumeracji";
-            this.poczatekNumeracji.Size = new System.Drawing.Size(76, 20);
-            this.poczatekNumeracji.TabIndex = 9;
+            this.Start_numbering_on.Location = new System.Drawing.Point(139, 134);
+            this.Start_numbering_on.Name = "Start_numbering_on";
+            this.Start_numbering_on.Size = new System.Drawing.Size(76, 20);
+            this.Start_numbering_on.TabIndex = 9;
             // 
-            // zacznijOd
+            // Change_numbering
             // 
-            this.zacznijOd.Location = new System.Drawing.Point(9, 160);
-            this.zacznijOd.Name = "zacznijOd";
-            this.zacznijOd.Size = new System.Drawing.Size(206, 23);
-            this.zacznijOd.TabIndex = 10;
-            this.zacznijOd.Text = "Confirm the change of numbering";
-            this.zacznijOd.UseVisualStyleBackColor = true;
-            this.zacznijOd.Click += new System.EventHandler(this.zacznijOd_Click);
+            this.Change_numbering.Location = new System.Drawing.Point(9, 160);
+            this.Change_numbering.Name = "Change_numbering";
+            this.Change_numbering.Size = new System.Drawing.Size(206, 23);
+            this.Change_numbering.TabIndex = 10;
+            this.Change_numbering.Text = "Confirm the change of numbering";
+            this.Change_numbering.UseVisualStyleBackColor = true;
+            this.Change_numbering.Click += new System.EventHandler(this.Change_numbering_Click);
             // 
-            // listaKamer
+            // List_of_cameras
             // 
-            this.listaKamer.Location = new System.Drawing.Point(2, 151);
-            this.listaKamer.MultiSelect = false;
-            this.listaKamer.Name = "listaKamer";
-            this.listaKamer.Size = new System.Drawing.Size(217, 86);
-            this.listaKamer.TabIndex = 11;
-            this.listaKamer.UseCompatibleStateImageBehavior = false;
-            this.listaKamer.View = System.Windows.Forms.View.Tile;
-            this.listaKamer.SelectedIndexChanged += new System.EventHandler(this.listaKamer_SelectedIndexChanged);
-            this.listaKamer.Click += new System.EventHandler(this.listaKamer_SelectedIndexChanged);
+            this.List_of_cameras.CheckBoxes = true;
+            this.List_of_cameras.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.List_of_cameras.Location = new System.Drawing.Point(2, 151);
+            this.List_of_cameras.Name = "List_of_cameras";
+            this.List_of_cameras.Size = new System.Drawing.Size(217, 86);
+            this.List_of_cameras.TabIndex = 11;
+            this.List_of_cameras.UseCompatibleStateImageBehavior = false;
+            this.List_of_cameras.View = System.Windows.Forms.View.SmallIcon;
+            this.List_of_cameras.SelectedIndexChanged += new System.EventHandler(this.List_of_cameras_SelectedIndexChanged);
+            this.List_of_cameras.Click += new System.EventHandler(this.List_of_cameras_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -177,9 +182,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 137);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 13);
+            this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Start numbering from:";
+            this.label4.Text = "Start numbering on:";
             // 
             // label5
             // 
@@ -196,30 +201,30 @@
             this.label5.Text = "Photo number";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // zdjecieNumer
+            // Display_photo_number
             // 
-            this.zdjecieNumer.Font = new System.Drawing.Font("Microsoft Sans Serif", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.zdjecieNumer.ForeColor = System.Drawing.Color.Black;
-            this.zdjecieNumer.Location = new System.Drawing.Point(2, 255);
-            this.zdjecieNumer.Name = "zdjecieNumer";
-            this.zdjecieNumer.Size = new System.Drawing.Size(217, 90);
-            this.zdjecieNumer.TabIndex = 16;
-            this.zdjecieNumer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.zdjecieNumer.Click += new System.EventHandler(this.Zdjecie_fokus_ON);
+            this.Display_photo_number.Font = new System.Drawing.Font("Microsoft Sans Serif", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Display_photo_number.ForeColor = System.Drawing.Color.Black;
+            this.Display_photo_number.Location = new System.Drawing.Point(2, 255);
+            this.Display_photo_number.Name = "Display_photo_number";
+            this.Display_photo_number.Size = new System.Drawing.Size(217, 90);
+            this.Display_photo_number.TabIndex = 16;
+            this.Display_photo_number.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Display_photo_number.Click += new System.EventHandler(this.Save_picture_fokus_ON);
             // 
-            // FileFormat
+            // Select_file_format
             // 
-            this.FileFormat.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.FileFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FileFormat.Items.AddRange(new object[] {
+            this.Select_file_format.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.Select_file_format.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Select_file_format.Items.AddRange(new object[] {
             "bmp",
             "jpeg",
             "png",
             "tiff"});
-            this.FileFormat.Location = new System.Drawing.Point(139, 107);
-            this.FileFormat.Name = "FileFormat";
-            this.FileFormat.Size = new System.Drawing.Size(76, 21);
-            this.FileFormat.TabIndex = 17;
+            this.Select_file_format.Location = new System.Drawing.Point(139, 107);
+            this.Select_file_format.Name = "Select_file_format";
+            this.Select_file_format.Size = new System.Drawing.Size(76, 21);
+            this.Select_file_format.TabIndex = 17;
             // 
             // label6
             // 
@@ -230,70 +235,70 @@
             this.label6.TabIndex = 18;
             this.label6.Text = "File Format";
             // 
-            // ResetPhotoNumber
+            // Reset_photo_number
             // 
-            this.ResetPhotoNumber.Location = new System.Drawing.Point(175, 244);
-            this.ResetPhotoNumber.Name = "ResetPhotoNumber";
-            this.ResetPhotoNumber.Size = new System.Drawing.Size(48, 22);
-            this.ResetPhotoNumber.TabIndex = 19;
-            this.ResetPhotoNumber.Text = "Reset";
-            this.ResetPhotoNumber.UseVisualStyleBackColor = true;
-            this.ResetPhotoNumber.Click += new System.EventHandler(this.ResetPhotoNumber_Click);
+            this.Reset_photo_number.Location = new System.Drawing.Point(175, 244);
+            this.Reset_photo_number.Name = "Reset_photo_number";
+            this.Reset_photo_number.Size = new System.Drawing.Size(48, 22);
+            this.Reset_photo_number.TabIndex = 19;
+            this.Reset_photo_number.Text = "Reset";
+            this.Reset_photo_number.UseVisualStyleBackColor = true;
+            this.Reset_photo_number.Click += new System.EventHandler(this.Reset_photo_number_Click);
             // 
-            // groupBox1
+            // Saving_group_box
             // 
-            this.groupBox1.Controls.Add(this.ShowSavingPath);
-            this.groupBox1.Controls.Add(this.UserPath);
-            this.groupBox1.Controls.Add(this.OpenFolderTree);
-            this.groupBox1.Controls.Add(this.OpenFileFolder);
-            this.groupBox1.Controls.Add(this.StandardPath);
-            this.groupBox1.Controls.Add(this.openGeneralFolder);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.NameOfFolder);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.FileFormat);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.NameOfFile);
-            this.groupBox1.Controls.Add(this.zacznijOd);
-            this.groupBox1.Controls.Add(this.poczatekNumeracji);
-            this.groupBox1.Location = new System.Drawing.Point(2, 328);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(221, 249);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Saving";
+            this.Saving_group_box.Controls.Add(this.Show_path_to_saving_folder);
+            this.Saving_group_box.Controls.Add(this.User_folder_select);
+            this.Saving_group_box.Controls.Add(this.Open_folder_tree);
+            this.Saving_group_box.Controls.Add(this.OpenFileFolder);
+            this.Saving_group_box.Controls.Add(this.Standard_folder_select);
+            this.Saving_group_box.Controls.Add(this.openGeneralFolder);
+            this.Saving_group_box.Controls.Add(this.label2);
+            this.Saving_group_box.Controls.Add(this.NameOfFolder);
+            this.Saving_group_box.Controls.Add(this.label3);
+            this.Saving_group_box.Controls.Add(this.Select_file_format);
+            this.Saving_group_box.Controls.Add(this.label6);
+            this.Saving_group_box.Controls.Add(this.label4);
+            this.Saving_group_box.Controls.Add(this.Name_of_file);
+            this.Saving_group_box.Controls.Add(this.Change_numbering);
+            this.Saving_group_box.Controls.Add(this.Start_numbering_on);
+            this.Saving_group_box.Location = new System.Drawing.Point(2, 328);
+            this.Saving_group_box.Name = "Saving_group_box";
+            this.Saving_group_box.Size = new System.Drawing.Size(221, 249);
+            this.Saving_group_box.TabIndex = 20;
+            this.Saving_group_box.TabStop = false;
+            this.Saving_group_box.Text = "Saving";
             // 
-            // ShowSavingPath
+            // Show_path_to_saving_folder
             // 
-            this.ShowSavingPath.Enabled = false;
-            this.ShowSavingPath.Location = new System.Drawing.Point(9, 187);
-            this.ShowSavingPath.Multiline = true;
-            this.ShowSavingPath.Name = "ShowSavingPath";
-            this.ShowSavingPath.Size = new System.Drawing.Size(206, 62);
-            this.ShowSavingPath.TabIndex = 24;
+            this.Show_path_to_saving_folder.Enabled = false;
+            this.Show_path_to_saving_folder.Location = new System.Drawing.Point(9, 187);
+            this.Show_path_to_saving_folder.Multiline = true;
+            this.Show_path_to_saving_folder.Name = "Show_path_to_saving_folder";
+            this.Show_path_to_saving_folder.Size = new System.Drawing.Size(206, 62);
+            this.Show_path_to_saving_folder.TabIndex = 24;
             // 
-            // UserPath
+            // User_folder_select
             // 
-            this.UserPath.AutoSize = true;
-            this.UserPath.Location = new System.Drawing.Point(9, 19);
-            this.UserPath.Name = "UserPath";
-            this.UserPath.Size = new System.Drawing.Size(72, 17);
-            this.UserPath.TabIndex = 26;
-            this.UserPath.TabStop = true;
-            this.UserPath.Text = "User Path";
-            this.UserPath.UseVisualStyleBackColor = true;
-            this.UserPath.CheckedChanged += new System.EventHandler(this.UserPath_CheckedChanged);
+            this.User_folder_select.AutoSize = true;
+            this.User_folder_select.Location = new System.Drawing.Point(9, 19);
+            this.User_folder_select.Name = "User_folder_select";
+            this.User_folder_select.Size = new System.Drawing.Size(76, 17);
+            this.User_folder_select.TabIndex = 26;
+            this.User_folder_select.TabStop = true;
+            this.User_folder_select.Text = "User folder";
+            this.User_folder_select.UseVisualStyleBackColor = true;
+            this.User_folder_select.CheckedChanged += new System.EventHandler(this.User_path_select_CheckedChanged);
             // 
-            // OpenFolderTree
+            // Open_folder_tree
             // 
-            this.OpenFolderTree.Location = new System.Drawing.Point(96, 52);
-            this.OpenFolderTree.Name = "OpenFolderTree";
-            this.OpenFolderTree.Size = new System.Drawing.Size(119, 23);
-            this.OpenFolderTree.TabIndex = 23;
-            this.OpenFolderTree.Text = "Open folder tree";
-            this.OpenFolderTree.UseVisualStyleBackColor = true;
-            this.OpenFolderTree.Click += new System.EventHandler(this.Select_the_folder_Click);
+            this.Open_folder_tree.Location = new System.Drawing.Point(96, 52);
+            this.Open_folder_tree.Name = "Open_folder_tree";
+            this.Open_folder_tree.Size = new System.Drawing.Size(119, 23);
+            this.Open_folder_tree.TabIndex = 23;
+            this.Open_folder_tree.Text = "Open folder tree";
+            this.Open_folder_tree.UseVisualStyleBackColor = true;
+            this.Open_folder_tree.Click += new System.EventHandler(this.Open_folder_tree_Click);
             // 
             // OpenFileFolder
             // 
@@ -303,19 +308,19 @@
             this.OpenFileFolder.TabIndex = 20;
             this.OpenFileFolder.Text = "Show";
             this.OpenFileFolder.UseVisualStyleBackColor = true;
-            this.OpenFileFolder.Click += new System.EventHandler(this.OpenFileFolder_Click);
+            this.OpenFileFolder.Click += new System.EventHandler(this.Open_file_folder_Click);
             // 
-            // StandardPath
+            // Standard_folder_select
             // 
-            this.StandardPath.AutoSize = true;
-            this.StandardPath.Location = new System.Drawing.Point(96, 19);
-            this.StandardPath.Name = "StandardPath";
-            this.StandardPath.Size = new System.Drawing.Size(93, 17);
-            this.StandardPath.TabIndex = 25;
-            this.StandardPath.TabStop = true;
-            this.StandardPath.Text = "Standard Path";
-            this.StandardPath.UseVisualStyleBackColor = true;
-            this.StandardPath.CheckedChanged += new System.EventHandler(this.StandardPath_CheckedChanged);
+            this.Standard_folder_select.AutoSize = true;
+            this.Standard_folder_select.Location = new System.Drawing.Point(96, 19);
+            this.Standard_folder_select.Name = "Standard_folder_select";
+            this.Standard_folder_select.Size = new System.Drawing.Size(97, 17);
+            this.Standard_folder_select.TabIndex = 25;
+            this.Standard_folder_select.TabStop = true;
+            this.Standard_folder_select.Text = "Standard folder";
+            this.Standard_folder_select.UseVisualStyleBackColor = true;
+            this.Standard_folder_select.CheckedChanged += new System.EventHandler(this.Standard_path_select_CheckedChanged);
             // 
             // openGeneralFolder
             // 
@@ -327,18 +332,18 @@
             this.openGeneralFolder.UseVisualStyleBackColor = true;
             this.openGeneralFolder.Click += new System.EventHandler(this.openGeneralFolder_Click);
             // 
-            // Zdjecie
+            // Save_picture
             // 
-            this.Zdjecie.BackgroundImage = global::KalibracjaKamery.Properties.Resources.saving;
-            this.Zdjecie.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Zdjecie.Enabled = false;
-            this.Zdjecie.Location = new System.Drawing.Point(104, 15);
-            this.Zdjecie.Name = "Zdjecie";
-            this.Zdjecie.Size = new System.Drawing.Size(115, 115);
-            this.Zdjecie.TabIndex = 21;
-            this.Zdjecie.UseVisualStyleBackColor = true;
-            this.Zdjecie.Click += new System.EventHandler(this.Zdjecie_Click);
-            this.Zdjecie.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Zdjecie_KeyDown);
+            this.Save_picture.BackgroundImage = global::KalibracjaKamery.Properties.Resources.saving;
+            this.Save_picture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Save_picture.Enabled = false;
+            this.Save_picture.Location = new System.Drawing.Point(104, 15);
+            this.Save_picture.Name = "Save_picture";
+            this.Save_picture.Size = new System.Drawing.Size(115, 115);
+            this.Save_picture.TabIndex = 21;
+            this.Save_picture.UseVisualStyleBackColor = true;
+            this.Save_picture.Click += new System.EventHandler(this.Save_picture_Click);
+            this.Save_picture.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Save_picture_KeyDown);
             // 
             // AlertInfo
             // 
@@ -350,45 +355,84 @@
             this.AlertInfo.Size = new System.Drawing.Size(0, 20);
             this.AlertInfo.TabIndex = 22;
             // 
-            // ReverseAxisX
+            // Reverse_in_axis_X
             // 
-            this.ReverseAxisX.AutoSize = true;
-            this.ReverseAxisX.Checked = true;
-            this.ReverseAxisX.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ReverseAxisX.Location = new System.Drawing.Point(11, 583);
-            this.ReverseAxisX.Name = "ReverseAxisX";
-            this.ReverseAxisX.Size = new System.Drawing.Size(108, 17);
-            this.ReverseAxisX.TabIndex = 27;
-            this.ReverseAxisX.Text = "Reverse in axis X";
-            this.ReverseAxisX.UseVisualStyleBackColor = true;
-            this.ReverseAxisX.CheckedChanged += new System.EventHandler(this.ReverseAxisX_CheckedChanged);
+            this.Reverse_in_axis_X.AutoSize = true;
+            this.Reverse_in_axis_X.Checked = true;
+            this.Reverse_in_axis_X.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Reverse_in_axis_X.Location = new System.Drawing.Point(11, 583);
+            this.Reverse_in_axis_X.Name = "Reverse_in_axis_X";
+            this.Reverse_in_axis_X.Size = new System.Drawing.Size(108, 17);
+            this.Reverse_in_axis_X.TabIndex = 27;
+            this.Reverse_in_axis_X.Text = "Reverse in axis X";
+            this.Reverse_in_axis_X.UseVisualStyleBackColor = true;
+            this.Reverse_in_axis_X.CheckedChanged += new System.EventHandler(this.Reverse_in_axis_X_CheckedChanged);
             // 
-            // CamerasControler
+            // Colorful
+            // 
+            this.Colorful.AutoSize = true;
+            this.Colorful.Checked = true;
+            this.Colorful.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Colorful.Location = new System.Drawing.Point(143, 583);
+            this.Colorful.Name = "Colorful";
+            this.Colorful.Size = new System.Drawing.Size(50, 17);
+            this.Colorful.TabIndex = 28;
+            this.Colorful.Text = "Color";
+            this.Colorful.UseVisualStyleBackColor = true;
+            this.Colorful.CheckedChanged += new System.EventHandler(this.Colorful_CheckedChanged);
+            // 
+            // tester
+            // 
+            this.tester.Location = new System.Drawing.Point(123, 606);
+            this.tester.Name = "tester";
+            this.tester.Size = new System.Drawing.Size(100, 20);
+            this.tester.TabIndex = 29;
+            // 
+            // Working_cameras
+            // 
+            this.Working_cameras.FormattingEnabled = true;
+            this.Working_cameras.Location = new System.Drawing.Point(104, 629);
+            this.Working_cameras.Name = "Working_cameras";
+            this.Working_cameras.Size = new System.Drawing.Size(121, 21);
+            this.Working_cameras.TabIndex = 30;
+            // 
+            // Checked_List_Box
+            // 
+            this.Checked_List_Box.Location = new System.Drawing.Point(72, 283);
+            this.Checked_List_Box.Name = "Checked_List_Box";
+            this.Checked_List_Box.Size = new System.Drawing.Size(120, 94);
+            this.Checked_List_Box.TabIndex = 0;
+            // 
+            // Cameras_controler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(224, 662);
-            this.Controls.Add(this.ReverseAxisX);
+            this.Controls.Add(this.Checked_List_Box);
+            this.Controls.Add(this.Working_cameras);
+            this.Controls.Add(this.tester);
+            this.Controls.Add(this.Colorful);
+            this.Controls.Add(this.Reverse_in_axis_X);
             this.Controls.Add(this.AlertInfo);
-            this.Controls.Add(this.Zdjecie);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.Save_picture);
+            this.Controls.Add(this.Saving_group_box);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.ResetPhotoNumber);
-            this.Controls.Add(this.zdjecieNumer);
-            this.Controls.Add(this.listaKamer);
+            this.Controls.Add(this.Reset_photo_number);
+            this.Controls.Add(this.Display_photo_number);
+            this.Controls.Add(this.List_of_cameras);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.refreshListOfCameras);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.KameraON);
-            this.Name = "CamerasControler";
+            this.Controls.Add(this.Mode_select_DOWN);
+            this.Controls.Add(this.Display_FPS);
+            this.Controls.Add(this.Mode_select_UP);
+            this.Name = "Cameras_controler";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "CamerasControler";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.CamerasControler_Load);
-            this.Click += new System.EventHandler(this.Zdjecie_fokus_ON);
+            this.Click += new System.EventHandler(this.Save_picture_fokus_ON);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nowy);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Saving_group_box.ResumeLayout(false);
+            this.Saving_group_box.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -396,34 +440,38 @@
 
         #endregion
 
-        private System.Windows.Forms.Button KameraON;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button refreshListOfCameras;
+        private System.Windows.Forms.Button Mode_select_UP;
+        private System.Windows.Forms.TextBox Display_FPS;
+        private System.Windows.Forms.Button Mode_select_DOWN;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox NameOfFolder;
-        private System.Windows.Forms.TextBox NameOfFile;
-        private System.Windows.Forms.TextBox poczatekNumeracji;
-        private System.Windows.Forms.Button zacznijOd;
-        private System.Windows.Forms.ListView listaKamer;
+        private System.Windows.Forms.TextBox Name_of_file;
+        private System.Windows.Forms.TextBox Start_numbering_on;
+        private System.Windows.Forms.Button Change_numbering;
+        private System.Windows.Forms.ListView List_of_cameras;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label zdjecieNumer;
+        private System.Windows.Forms.Label Display_photo_number;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox FileFormat;
-        private System.Windows.Forms.Button ResetPhotoNumber;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button Zdjecie;
+        private System.Windows.Forms.ComboBox Select_file_format;
+        private System.Windows.Forms.Button Reset_photo_number;
+        private System.Windows.Forms.GroupBox Saving_group_box;
+        private System.Windows.Forms.Button Save_picture;
         private System.Windows.Forms.Label AlertInfo;
         private System.Windows.Forms.Button openGeneralFolder;
         private System.Windows.Forms.Button OpenFileFolder;
-        private System.Windows.Forms.Button OpenFolderTree;
-        private System.Windows.Forms.TextBox ShowSavingPath;
-        private System.Windows.Forms.RadioButton StandardPath;
-        private System.Windows.Forms.RadioButton UserPath;
-        private System.Windows.Forms.CheckBox ReverseAxisX;
+        private System.Windows.Forms.Button Open_folder_tree;
+        private System.Windows.Forms.TextBox Show_path_to_saving_folder;
+        private System.Windows.Forms.RadioButton Standard_folder_select;
+        private System.Windows.Forms.RadioButton User_folder_select;
+        private System.Windows.Forms.CheckBox Reverse_in_axis_X;
+        private System.Windows.Forms.CheckBox Colorful;
+        private System.Windows.Forms.TextBox tester;
+        private System.Windows.Forms.ComboBox Working_cameras;
+        private System.Windows.Forms.CheckedListBox Checked_List_Box;
     }
 }
 
