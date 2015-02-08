@@ -10,7 +10,7 @@ using PylonC.NETSupportLibrary;
 using System.IO;
 using PylonC.NET;
 using System.Threading;
-using PUTVision_CameraBasler;
+using PUTVision_BaslerCenter;
 
 
 
@@ -19,7 +19,7 @@ namespace KalibracjaKamery
 
     public partial class Cameras_controler : Form
     {
-        public CameraBasler basler;
+        public BaslerCenter basler;
         PylonBuffer<Byte> imageToSave=null;
         int modeSelect = 1;
         int fps;
@@ -77,7 +77,7 @@ namespace KalibracjaKamery
                 System.IO.Directory.CreateDirectory(whereSave);
 
                 uint sizeX, sizeY;
-                basler.ReturnFrameSize(out sizeX, out sizeY);
+                basler ReturnFrameSize(out sizeX, out sizeY);
 
                 if (Select_file_format.SelectedIndex == 0)
                 {
@@ -512,7 +512,7 @@ namespace KalibracjaKamery
             timer1.Stop();
             if (basler != null)
             {
-                basler.permissionToWork = false;
+                //basler.permissionToWork = false;
             }
 
             Pylon.Terminate();

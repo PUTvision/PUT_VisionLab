@@ -6,66 +6,35 @@ using System.Data;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-
+using System.Windows.Forms;
 using PylonC.NET;
+
+using PUTVision_CameraBasler;
+
 
 namespace PUTVision_BaslerCenter
 {
-    public class BaslerCenter : PUTVision_CameraBasler.CameraBasler
+    public class BaslerCenter 
     {
-     // maybe in the future add List<Capture> for ability to use more than one camera
-
-
-        // const acts like static mebmer of a class
-        private const int frameToShowWidth = 320;
-        private int FrameToShowWidth { get { return frameToShowWidth; } }
-        private const int frameToShowHeight = 240;
-        private int FrameToShowHeight { get { return frameToShowHeight; } }
-
-        #region Pylon variables
-        // variables from pylon example
-        private const uint NUM_BUFFERS = 50;                                            /* Number of buffers used for grabbing. */
-        private uint GIGE_PACKET_SIZE = 1500;//8192;                                    /* Size of one Ethernet packet. */
-        private const uint GIGE_PROTOCOL_OVERHEAD = 36;
-        private EPylonPixelType pixelType = EPylonPixelType.PixelType_BayerBG8;/* Total number of bytes of protocol overhead. */
-
-        //private uint NUM_DEVICES = 1;                                                   /* Number of devices (cameras) to use. */
-        //private PYLON_DEVICE_HANDLE hDev = new PYLON_DEVICE_HANDLE();                                             /* Handles for the pylon devices. */
-       // private PYLON_STREAMGRABBER_HANDLE[] hGrabber;                                  /* Handle for the pylon stream grabber. */
-        //private Dictionary<PYLON_STREAMBUFFER_HANDLE, PylonBuffer<Byte>>[] buffers;     /* Holds handles and buffers used for grabbing. */
-        //private PYLON_WAITOBJECTS_HANDLE wos;                                           /* Wait objects. */
-       // private PylonGrabResult_t[] grabResult;                                         /* Stores the result of a grab operation. */
-        #endregion
-        public PYLON_DEVICE_HANDLE[] hDev;        /* Handles for the pylon devices. */
-
-        public PylonBuffer<Byte> imageToSave = null;
+        public CameraBasler[] cameras;
+        protected uint NUM_DEVICES = 0;        /* Handles for the pylon devices. */
+        protected bool permissionToWork = true;
+        protected bool working = false;
         public Thread live;
-        public string overwritteNote = "";
-        public string alertNote = "";
-        public bool flagSave = false;
-        public bool flagWriteToDisk = false;
-
-        public bool zoomToFit = true;
-        public bool savingTime = false;
-        public bool reverseInAxisX = true;
 
         private BaslerCenter[] center;
-
-        public uint NUM_DEVICES = 0;
-        public string[] wszystkieNazwy;
 
         #region Constructors
         public BaslerCenter(uint NUM_DEV)
         {
-            this.hDev = new PYLON_DEVICE_HANDLE[NUM_DEV];        /* Handles for the pylon devices. */
-            for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
+            this.cameras = new CameraBasler[NUM_DEV];        /* Handles for the pylon devices. */
+            /*for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
             {
-                this.hDev[deviceIndex] = new PYLON_DEVICE_HANDLE();
-            }
+                this.cameras[deviceIndex]= new CameraBasler();
+            }*/
         }
 
-       
+
 
         public BaslerCenter(BaslerCenter[] center)
         {
@@ -82,24 +51,24 @@ namespace PUTVision_BaslerCenter
 
         // dodać (do ogólnego):
         // int numberOfCameras
-        public override void Open()
-        {
-           
-        }
+
+        #endregion
+
         public void Start()
         {
-                  
+
             if (true)//this.permissionToWork && !this.working)
+            {
+
+            int reservedeviceIndex = 0; /*if you can not open the camera, you will know which one*/
+
+            try
             {
                 this.working = true;
                 uint NUM_BUFFERS = 12;        /* Number of buffers used for grabbing. */
                 const uint GIGE_PACKET_SIZE = 1500; /* Size of one Ethernet packet. */
                 const uint GIGE_PROTOCOL_OVERHEAD = 36;/* Buffer used for grabbing. */
-
-                
-                try
-                {
-                             /* Number of the available devices. */
+                    /* Number of the available devices. */
                     bool isAvail;                 /* Used for checking feature availability. */
                     bool isReady;                 /* Used as an output parameter. */
                     int i;                        /* Counter. */
@@ -129,11 +98,11 @@ namespace PUTVision_BaslerCenter
                     uint numDevicesAvail = Pylon.EnumerateDevices();
 
 
-                        if (numDevicesAvail < NUM_DEVICES)
-                        {
-                            Console.Error.WriteLine("Found {0} devices. At least {1} devices needed to run this sample.", numDevicesAvail, NUM_DEVICES);
-                            throw new Exception("Not enough devices found.");
-                        }
+                    if (numDevicesAvail < NUM_DEVICES)
+                    {
+                        Console.Error.WriteLine("Found {0} devices. At least {1} devices needed to run this sample.", numDevicesAvail, NUM_DEVICES);
+                        throw new Exception("Not enough devices found.");
+                    }
 
                     /* Create wait objects. This must be done outside of the loop. */
                     wos = Pylon.WaitObjectsCreate();
@@ -152,65 +121,52 @@ namespace PUTVision_BaslerCenter
                     /* Open camera and set parameters. */
                     for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
                     {
-                        //hDev[deviceIndex] = Pylon.CreateDeviceByIndex((uint)deviceIndex);
+                        reservedeviceIndex=deviceIndex;
+                        //this.cameras[deviceIndex].hDev = Pylon.CreateDeviceByIndex((uint)deviceIndex);
                         /* Get handles for the devices. */
-                        for (i = 0; i < numDevicesAvail; i++)
-                        {
-                            try
-                            {
-                                PYLON_DEVICE_INFO_HANDLE hDi_to_check_all = Pylon.GetDeviceInfoHandle((uint)i);
-                                string cameraName = Pylon.DeviceInfoGetPropertyValueByName(hDi_to_check_all, Pylon.cPylonDeviceInfoFriendlyNameKey);
-
-                                if (this.wszystkieNazwy[deviceIndex] == cameraName)
-                                {
-                                    hDev[deviceIndex] = Pylon.CreateDeviceByIndex((uint)i);
-                                    //basler[deviceIndex].working=true;
-                                }
-                            }
-                            catch { }
-                        }
+                        this.cameras[deviceIndex].AssingDevice();
 
 
                         /* Before using the device, it must be opened. Open it for configuring
                         parameters and for grabbing images. */
-                        Pylon.DeviceOpen(hDev[deviceIndex], Pylon.cPylonAccessModeControl | Pylon.cPylonAccessModeStream);
+                        Pylon.DeviceOpen(this.cameras[deviceIndex].hDev, Pylon.cPylonAccessModeControl | Pylon.cPylonAccessModeStream);
 
                         /* Print out the name of the camera we are using. */
                         {
-                            bool isReadable = Pylon.DeviceFeatureIsReadable(hDev[deviceIndex], "DeviceModelName");
+                            bool isReadable = Pylon.DeviceFeatureIsReadable(this.cameras[deviceIndex].hDev, "DeviceModelName");
                             if (isReadable)
                             {
-                                string name = Pylon.DeviceFeatureToString(hDev[deviceIndex], "DeviceModelName");
+                                string name = Pylon.DeviceFeatureToString(this.cameras[deviceIndex].hDev, "DeviceModelName");
                                 Console.WriteLine("Using camera '{0}'", name);
                             }
                         }
 
-                        //Pylon.DeviceSetBooleanFeature(hDev[deviceIndex], "ReverseX", this.reverseInAxisX);
+                        //Pylon.DeviceSetBooleanFeature(this.cameras[deviceIndex].hDev, "ReverseX", this.reverseInAxisX);
 
-                        Pylon.DeviceFeatureFromString(hDev[deviceIndex], "UserSetSelector", "UserSet1");
-                        Pylon.DeviceExecuteCommandFeature(hDev[deviceIndex], "UserSetLoad");
-                        //Pylon.DeviceSetIntegerFeature(hDev[deviceIndex], "Gain", 500);
+                        Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "UserSetSelector", "UserSet1");
+                        Pylon.DeviceExecuteCommandFeature(this.cameras[deviceIndex].hDev, "UserSetLoad");
+                        //Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "Gain", 500);
 
-                        if (this.colorful)
+                        if (this.cameras[deviceIndex].ReturnColor())
                         {
-                            isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_PixelFormat_BayerBG8");
+                            isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_PixelFormat_BayerBG8");
                             if (isAvail)
                             {
                                 /* Feature is available. */
-                                Pylon.DeviceFeatureFromString(hDev[deviceIndex], "PixelFormat", "BayerBG8");
-                                pixelType = EPylonPixelType.PixelType_BayerGR8;
-
+                                this.cameras[deviceIndex].SetPixelType(EPylonPixelType.PixelType_BayerGR8);
+                                Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "PixelFormat", "BayerBG8");
+                                
                             }
                             else
                             {
-                                isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_PixelFormat_Mono8");
+                                isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_PixelFormat_Mono8");
                                 if (isAvail)
                                 {
                                     try
                                     {
                                         /* ... Set the pixel format to Mono8. */
-                                        pixelType = EPylonPixelType.PixelType_Mono8;
-                                        Pylon.DeviceFeatureFromString(hDev[deviceIndex], "PixelFormat", "Mono8");
+                                        this.cameras[deviceIndex].SetPixelType(EPylonPixelType.PixelType_Mono8);
+                                        Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "PixelFormat", "Mono8");
 
                                     }
                                     catch { }
@@ -226,14 +182,15 @@ namespace PUTVision_BaslerCenter
                         else
                         {   /* Set the pixel format to Mono8, where gray values will be output as 8 bit values for each pixel. */
                             /* ... Check first to see if the device supports the Mono8 format. */
-                            isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_PixelFormat_Mono8");
+                            isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_PixelFormat_Mono8");
                             if (isAvail)
                             {
                                 try
                                 {
                                     /* ... Set the pixel format to Mono8. */
-                                    Pylon.DeviceFeatureFromString(hDev[deviceIndex], "PixelFormat", "Mono8");
-                                    pixelType = EPylonPixelType.PixelType_Mono8;
+                                    this.cameras[deviceIndex].SetPixelType(EPylonPixelType.PixelType_Mono8);
+                                    Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "PixelFormat", "Mono8");
+                                    
                                 }
                                 catch { }
                             }
@@ -246,32 +203,32 @@ namespace PUTVision_BaslerCenter
                         }
 
                         /* Disable acquisition start trigger if available */
-                        isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_TriggerSelector_AcquisitionStart");
+                        isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_TriggerSelector_AcquisitionStart");
                         if (isAvail)
                         {
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerSelector", "AcquisitionStart");
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerMode", "Off");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerSelector", "AcquisitionStart");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerMode", "Off");
                         }
 
                         /* Disable frame burst start trigger if available */
-                        isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_TriggerSelector_FrameBurstStart");
+                        isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_TriggerSelector_FrameBurstStart");
                         if (isAvail)
                         {
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerSelector", "FrameBurstStart");
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerMode", "Off");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerSelector", "FrameBurstStart");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerMode", "Off");
                         }
 
                         /* Disable frame start trigger if available */
-                        isAvail = Pylon.DeviceFeatureIsAvailable(hDev[deviceIndex], "EnumEntry_TriggerSelector_FrameStart");
+                        isAvail = Pylon.DeviceFeatureIsAvailable(this.cameras[deviceIndex].hDev, "EnumEntry_TriggerSelector_FrameStart");
                         if (isAvail)
                         {
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerSelector", "FrameStart");
-                            Pylon.DeviceFeatureFromString(hDev[deviceIndex], "TriggerMode", "Off");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerSelector", "FrameStart");
+                            Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "TriggerMode", "Off");
                         }
 
                         /* We will use the Continuous frame mode, i.e., the camera delivers
                         images continuously. */
-                        Pylon.DeviceFeatureFromString(hDev[deviceIndex], "AcquisitionMode", "Continuous");
+                        Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "AcquisitionMode", "Continuous");
 
                         PYLON_DEVICE_INFO_HANDLE hDi = Pylon.GetDeviceInfoHandle((uint)deviceIndex);
                         string deviceClass = Pylon.DeviceInfoGetPropertyValueByName(hDi, Pylon.cPylonDeviceInfoDeviceClassKey);
@@ -287,9 +244,9 @@ namespace PUTVision_BaslerCenter
                                so the switch can line up packets better.
                             */
 
-                            Pylon.DeviceSetIntegerFeature(hDev[deviceIndex], "GevSCPSPacketSize", GIGE_PACKET_SIZE);
-                            Pylon.DeviceSetIntegerFeature(hDev[deviceIndex], "GevSCPD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * (NUM_DEVICES - 1));
-                            Pylon.DeviceSetIntegerFeature(hDev[deviceIndex], "GevSCFTD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * deviceIndex);
+                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCPSPacketSize", GIGE_PACKET_SIZE);
+                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCPD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * (NUM_DEVICES - 1));
+                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCFTD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * deviceIndex);
                         }
                         else if (deviceClass == "Basler1394")
                         {
@@ -301,14 +258,14 @@ namespace PUTVision_BaslerCenter
                             long recommendedPacketSize = 0;
 
                             /* Get the recommended packet size from the camera. */
-                            recommendedPacketSize = Pylon.DeviceGetIntegerFeature(hDev[deviceIndex], "RecommendedPacketSize");
+                            recommendedPacketSize = Pylon.DeviceGetIntegerFeature(this.cameras[deviceIndex].hDev, "RecommendedPacketSize");
 
                             if (newPacketSize < recommendedPacketSize)
                             {
                                 /* Get the increment value for the packet size.
                                    We must make sure that the new value we're setting is divisible by the increment of that feature. */
                                 long packetSizeInc = 0;
-                                packetSizeInc = Pylon.DeviceGetIntegerFeatureInc(hDev[deviceIndex], "PacketSize");
+                                packetSizeInc = Pylon.DeviceGetIntegerFeatureInc(this.cameras[deviceIndex].hDev, "PacketSize");
 
                                 /* Adjust the new packet size so is divisible by its increment. */
                                 newPacketSize -= newPacketSize % packetSizeInc;
@@ -320,7 +277,7 @@ namespace PUTVision_BaslerCenter
                             }
 
                             /* Set the new packet size. */
-                            Pylon.DeviceSetIntegerFeature(hDev[deviceIndex], "PacketSize", newPacketSize);
+                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "PacketSize", newPacketSize);
                             Console.WriteLine("Using packetsize: {0}", newPacketSize);
                         }
 
@@ -329,7 +286,7 @@ namespace PUTVision_BaslerCenter
                     {
                         /* Allocate and register buffers for grab. */
                         /* Determine the required size for the grab buffer. */
-                        payloadSize[deviceIndex] = checked((uint)Pylon.DeviceGetIntegerFeature(hDev[deviceIndex], "PayloadSize"));
+                        payloadSize[deviceIndex] = checked((uint)Pylon.DeviceGetIntegerFeature(this.cameras[deviceIndex].hDev, "PayloadSize"));
 
                         /* Image grabbing is done using a stream grabber.  
                           A device may be able to provide different streams. A separate stream grabber must 
@@ -338,7 +295,7 @@ namespace PUTVision_BaslerCenter
                           */
 
                         /* Get the number of streams supported by the device and the transport layer. */
-                        nStreams[deviceIndex] = Pylon.DeviceGetNumStreamGrabberChannels(hDev[deviceIndex]);
+                        nStreams[deviceIndex] = Pylon.DeviceGetNumStreamGrabberChannels(this.cameras[deviceIndex].hDev);
 
                         if (nStreams[deviceIndex] < 1)
                         {
@@ -346,7 +303,7 @@ namespace PUTVision_BaslerCenter
                         }
 
                         /* Create and open a stream grabber for the first channel. */
-                        hGrabber[deviceIndex] = Pylon.DeviceGetStreamGrabber(hDev[deviceIndex], 0);
+                        hGrabber[deviceIndex] = Pylon.DeviceGetStreamGrabber(this.cameras[deviceIndex].hDev, 0);
 
                         Pylon.StreamGrabberOpen(hGrabber[deviceIndex]);
 
@@ -402,27 +359,27 @@ namespace PUTVision_BaslerCenter
                        the image data will be grabbed into the provided buffers.  */
 
                     /* Let the camera acquire images. */
-                    //Pylon.DeviceFeatureFromString(hDev[deviceIndex], "UserSetSelector", "Default");
-                    
+                    //Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "UserSetSelector", "Default");
+
                     for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
                     {
                         /* Let the camera acquire images. */
-                        Pylon.DeviceExecuteCommandFeature(hDev[deviceIndex], "AcquisitionStart");
+                        Pylon.DeviceExecuteCommandFeature(this.cameras[deviceIndex].hDev, "AcquisitionStart");
                     }
 
                     /* Set the timer to 5 s and start it. */
                     timer.Change(Timeout.Infinite, Timeout.Infinite);
 
                     /* Counts the number of grabbed images. */
-                    
+
 
                     /* Grab until the timer expires. */
-                    for (;;)
+                    for (; ; )
                     {
 
                         int bufferIndex;  /* Index of the buffer. */
                         uint woIndex;
-                        
+
                         /* Wait for the next buffer to be filled. Wait up to 1000 ms. */
                         isReady = Pylon.WaitObjectsWaitForAny(wos, 1000, out woIndex);
 
@@ -478,31 +435,31 @@ namespace PUTVision_BaslerCenter
                             /* Perform processing. */
                             //basler[deviceIndex].sizeX= (uint)grabResult[woIndex].SizeX;
 
-                           // basler[deviceIndex].sizeY = (uint)grabResult[woIndex].SizeY;
+                            // basler[deviceIndex].sizeY = (uint)grabResult[woIndex].SizeY;
 
                             /* Display image */
-                            
+
                             Pylon.ImageWindowDisplayImage<Byte>(woIndex, buffer, grabResult[woIndex]);
 
-                            if (this.zoomToFit == true)
+                            if (this.cameras[deviceIndex].ReturnZoomToFit())
                             {
                                 System.Windows.Forms.SendKeys.SendWait("^{MULTIPLY}");
-                                this.zoomToFit = false;
+                                this.cameras[deviceIndex].SetZoomToFit(false);
                             }
-                            
-                            if (this.flagSave == true)
+
+                            if (this.cameras[deviceIndex].ReturnFlagSave())
                             {
-                                this.imageToSave = buffer;
-                                this.flagSave = false;
-                                this.flagWriteToDisk = true;
+                                this.cameras[deviceIndex].SetImageToSave(buffer);
+                                this.cameras[deviceIndex].SetFlagSave(false);
+                                this.cameras[deviceIndex].SetFlagWriteToDisk(true);
                             }
 
 
                         }
                         else if (grabResult[woIndex].Status == EPylonGrabStatus.Failed)
                         {
-                            this.alertNote = "Camera wasn't grabbed successfully";
-                            
+                            this.cameras[deviceIndex].SetAlertNote("Camera wasn't grabbed successfully");
+
                         }
 
                         /* Once finished with the processing, requeue the buffer to be filled again. */
@@ -511,8 +468,8 @@ namespace PUTVision_BaslerCenter
                         //basler[deviceIndex].fps++;
 
                         if (!permissionToWork)
-                        { 
-                            break; 
+                        {
+                            break;
                         }
                     }
 
@@ -521,7 +478,7 @@ namespace PUTVision_BaslerCenter
                     for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
                     {
                         /*  ... Stop the camera. */
-                        Pylon.DeviceExecuteCommandFeature(hDev[deviceIndex], "AcquisitionStop");
+                        Pylon.DeviceExecuteCommandFeature(this.cameras[deviceIndex].hDev, "AcquisitionStop");
                     }
 
                     // Remove all wait objects from WaitObjects.
@@ -564,22 +521,22 @@ namespace PUTVision_BaslerCenter
                         /* ... Close and release the pylon device. The stream grabber becomes invalid
                            after closing the pylon device. Don't call stream grabber related methods after 
                            closing or releasing the device. */
-                        Pylon.DeviceClose(hDev[deviceIndex]);
-                        Pylon.DestroyDevice(hDev[deviceIndex]);
+                        Pylon.DeviceClose(this.cameras[deviceIndex].hDev);
+                        Pylon.DestroyDevice(this.cameras[deviceIndex].hDev);
                     }
 
                     /* Dispose timer and event. */
                     timer.Dispose();
                     timoutEvent.Close();
 
-                    
+
                     /* ... Shut down the pylon runtime system. Don't call any pylon function after 
                        calling PylonTerminate(). */
                     Pylon.Terminate();
                 }
                 catch (Exception e)
                 {
-                    this.alertNote = "Can not open the camera!";
+                    this.cameras[reservedeviceIndex].SetAlertNote("Can not open the camera!");
                     this.working = false;
                     /* Retrieve the error message. */
                     string msg = GenApi.GetLastErrorMessage() + "\n" + GenApi.GetLastErrorDetail();
@@ -597,14 +554,14 @@ namespace PUTVision_BaslerCenter
                     {
                         try
                         {
-                            if (this.hDev[deviceIndex].IsValid)
+                            if (this.cameras[deviceIndex].hDev.IsValid)
                             {
                                 /* ... Close and release the pylon device. */
-                                if (Pylon.DeviceIsOpen(this.hDev[deviceIndex]))
+                                if (Pylon.DeviceIsOpen(this.cameras[deviceIndex].hDev))
                                 {
-                                    Pylon.DeviceClose(this.hDev[deviceIndex]);
+                                    Pylon.DeviceClose(this.cameras[deviceIndex].hDev);
                                 }
-                                Pylon.DestroyDevice(this.hDev[deviceIndex]);
+                                Pylon.DestroyDevice(this.cameras[deviceIndex].hDev);
                             }
                         }
                         catch (Exception)
@@ -619,14 +576,6 @@ namespace PUTVision_BaslerCenter
             this.working = false;
         }
 
-        
-        public override void Capture(int _imageNumber, bool _enableImageSave, bool _enableImageShow)
-        {
-        }
-        public override void Close()
-        {
-        }
-        #endregion
 
         public void Recording()
         {
@@ -636,54 +585,7 @@ namespace PUTVision_BaslerCenter
         }
 
 
-        public 
-
-        #region FPS
-        void IncreaseFPS()
-        {
-            this.fps++;
-        }
-
-        public void RestetFPS()
-        {
-            this.fps=0;
-        }
-
-        public int ReturnFPS()
-        {
-            return this.fps;
-        }
-        #endregion
-
-        #region Camera Name
-        public string ReturnCameraName()
-        {
-            return this.cameraName;
-        }
-
-        public void RenameCamera(string name)
-        {
-            this.cameraName=name;
-        }
-        #endregion
-
-        #region Freame size
-        
-        public void SetFrameSize(uint sizeX, uint sizeY)
-        {
-            this.frameWidth = sizeX;
-            this.frameHeight = sizeY;
-        }
-        public void ReturnFrameSize(out uint width, out uint Height)
-        {
-            width = this.frameWidth;
-            Height = this.frameHeight;
-        }
-        #endregion
-
-        #region Device Handle
-
-        #endregion
+  
 
     }
 }

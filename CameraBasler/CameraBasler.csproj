@@ -52,10 +52,6 @@
       <Project>{402187ff-4b69-44ea-bec9-492ebd7ff244}</Project>
       <Name>CameraBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICamera\ICamera.csproj">
-      <Project>{fd66191d-1920-4415-9df2-5167ae462277}</Project>
-      <Name>ICamera</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

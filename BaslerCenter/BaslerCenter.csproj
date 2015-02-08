@@ -36,7 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,10 +51,6 @@
     <ProjectReference Include="..\CameraBasler\CameraBasler.csproj">
       <Project>{89a3b507-78db-47fc-9730-f487e5aabb64}</Project>
       <Name>CameraBasler</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ICamera\ICamera.csproj">
-      <Project>{fd66191d-1920-4415-9df2-5167ae462277}</Project>
-      <Name>ICamera</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

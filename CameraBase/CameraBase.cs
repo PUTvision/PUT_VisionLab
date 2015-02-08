@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PUTVision_CameraBase
+namespace PUTVision_CameraBase 
 {
     public abstract class CameraBase
     {
-        public bool working=false;
-        public bool permissionToWork=true;
-        protected bool colorful;
+        protected bool working = false;
+        protected bool permissionToWork = true;
+        protected bool colorful = true;
         protected int cameraNumber;
-        public string cameraName;
+        protected string cameraName;
 
         protected uint frameHeight;
         protected uint frameWidth;
 
-        protected int photoNumber;
-        public int fps = 0;
+        protected int photoNumber = 0;
+        protected int fps = 0;
 
         protected string filenamePrefix;
 
