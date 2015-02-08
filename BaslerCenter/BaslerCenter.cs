@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using PylonC.NET;
 
 using PUTVision_CameraBasler;
+using PUTVision_CameraBase;
 
 
 namespace PUTVision_BaslerCenter
@@ -28,10 +29,10 @@ namespace PUTVision_BaslerCenter
         public BaslerCenter(uint NUM_DEV)
         {
             this.cameras = new CameraBasler[NUM_DEV];        /* Handles for the pylon devices. */
-            /*for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
+            for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
             {
                 this.cameras[deviceIndex]= new CameraBasler();
-            }*/
+            }
         }
 
 
@@ -467,7 +468,7 @@ namespace PUTVision_BaslerCenter
 
                         //basler[deviceIndex].fps++;
 
-                        if (!permissionToWork)
+                        if (!this.permissionToWork)
                         {
                             break;
                         }
@@ -584,8 +585,17 @@ namespace PUTVision_BaslerCenter
             this.live.Start();
         }
 
+        #region Num_Devices
+        public void SetNUM_DEVICES(uint num)
+        {
+            this.NUM_DEVICES = num;
+        }
+        public uint SetNUM_DEVICES()
+        {
+            return this.NUM_DEVICES;
+        }
+        #endregion
 
-  
 
     }
 }

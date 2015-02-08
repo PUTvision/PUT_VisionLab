@@ -10,7 +10,10 @@ using PylonC.NETSupportLibrary;
 using System.IO;
 using PylonC.NET;
 using System.Threading;
+
 using PUTVision_BaslerCenter;
+using PUTVision_CameraBasler;
+using PUTVision_CameraBase;
 
 
 
@@ -30,7 +33,6 @@ namespace KalibracjaKamery
         static bool recording = true;
         
         string pathFolder = System.Environment.CurrentDirectory + "\\";
-        Thread camerasLive;
         string[] camerasToOpen;
 
         bool pulseBit = false;
@@ -39,7 +41,6 @@ namespace KalibracjaKamery
         bool flagSave = false;
         bool flagWriteToDisk = false;
 
-        bool zoomToFit = true;
         bool savingTime = false;
         bool reverseInAxisX = true;
 
@@ -77,7 +78,7 @@ namespace KalibracjaKamery
                 System.IO.Directory.CreateDirectory(whereSave);
 
                 uint sizeX, sizeY;
-                basler ReturnFrameSize(out sizeX, out sizeY);
+                basler.cameras[0].ReturnFrameSize(out sizeX, out sizeY);
 
                 if (Select_file_format.SelectedIndex == 0)
                 {
@@ -142,7 +143,7 @@ namespace KalibracjaKamery
             Display_FPS.Text = fps.ToString();
             fps = 0;
             pulseBit = !pulseBit;
-            zoomToFit = true;
+ 
             Show_path_to_saving_folder.Text = pathFolder;
             CheckFileExist();
             if (Mode_select_UP.Enabled == false)
@@ -379,14 +380,13 @@ namespace KalibracjaKamery
                     {
 
                     camerasToOpen = null;
-                    basler = null;
+                    //basler = null;
                     Working_cameras.Items.Clear();
                     Checked_List_Box.Items.Clear();
 
                     camerasToOpen = new string[List_of_cameras.CheckedItems.Count];
-                    basler = new CameraBasler((uint)List_of_cameras.CheckedItems.Count);
-                    basler.NUM_DEVICES = (uint)List_of_cameras.CheckedItems.Count;
-                    basler.wszystkieNazwy = new string[List_of_cameras.CheckedItems.Count];
+                    basler = new BaslerCenter((uint)List_of_cameras.CheckedItems.Count);
+                    basler.SetNUM_DEVICES((uint)List_of_cameras.CheckedItems.Count);
 
                     for (int i = 0; i < (int)List_of_cameras.CheckedItems.Count; i++)
                     {
@@ -394,7 +394,7 @@ namespace KalibracjaKamery
                         /* Retrieve the device data from the list view item. */
                         DeviceEnumerator.Device camera = selectedCamera.Tag as DeviceEnumerator.Device;
                         camerasToOpen[i] = camera.Name;
-                        basler.wszystkieNazwy[i]=camera.Name;
+                        basler.cameras[i].SetCameraName(camera.Name);//.SetCameraName(camera.Name);
 
                         Working_cameras.Items.Add(camera.Name);
                         Checked_List_Box.Items.Add(camera.Name);

@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CameraBase\CameraBase.csproj">
+      <Project>{402187ff-4b69-44ea-bec9-492ebd7ff244}</Project>
+      <Name>CameraBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CameraBasler\CameraBasler.csproj">
       <Project>{89a3b507-78db-47fc-9730-f487e5aabb64}</Project>
       <Name>CameraBasler</Name>

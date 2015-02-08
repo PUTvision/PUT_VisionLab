@@ -24,7 +24,7 @@ namespace PUTVison_CameraPointGrey
         {
         }
 
-        public CameraPointGrey(int _cameraNumber, string _cameraName, int _frameWidth, int _frameHeight)
+        public CameraPointGrey(int _cameraNumber, string _cameraName, uint _frameWidth, uint _frameHeight)
         {
             this.cameraNumber = _cameraNumber;
             this.cameraName = _cameraName;

@@ -42,7 +42,7 @@ namespace PUTVision_CameraBasler
         protected string alertNote = "";
         protected bool flagSave = false;
         protected bool flagWriteToDisk = false;
-        protected bool zoomToFit = true;
+        public bool zoomToFit = true;
 
         //protected bool reverseInAxisX = true;
 
@@ -51,7 +51,7 @@ namespace PUTVision_CameraBasler
         #region Constructors
         public CameraBasler()
         {
-
+            
         }
 
         /*public CameraBasler()
@@ -157,7 +157,7 @@ namespace PUTVision_CameraBasler
             return this.cameraName;
         }
 
-        public void RenameCamera(string name)
+        public void SetCameraName(string name)
         {
             this.cameraName=name;
         }
