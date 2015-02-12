@@ -8,16 +8,14 @@ namespace PUTVision_CameraBase
 {
     public abstract class CameraBase
     {
-        protected bool working = false;
-        protected bool permissionToWork = true;
         protected bool colorful = true;
-        protected int cameraNumber;
-        protected string cameraName;
+        protected int cameraNumber = 0;
+        protected string cameraName = "camera";
 
-        protected uint frameHeight;
-        protected uint frameWidth;
+        protected uint frameHeight=100;
+        protected uint frameWidth=200;
 
-        protected int photoNumber = 0;
+        protected int photoNumber = 1;
         protected int fps = 0;
 
         protected string filenamePrefix;
@@ -40,6 +38,73 @@ namespace PUTVision_CameraBase
                 Log(null, e);
             }
         }
+
+        #region Freame size
+
+        public void SetFrameSize(uint sizeX, uint sizeY)
+        {
+            this.frameWidth = sizeX;
+            this.frameHeight = sizeY;
+        }
+        public void ReturnFrameSize(out uint width, out uint Height)
+        {
+            width = this.frameWidth;
+            Height = this.frameHeight;
+        }
+        #endregion
+
+        #region Photo Number
+        public void IncreasePhotoNumber()
+        {
+            this.photoNumber++;
+        }
+
+        public void SetPhotoNumber(int number)
+        {
+            this.photoNumber=number;
+        }
+
+        public void RestetPhotoNumber()
+        {
+            this.photoNumber = 0;
+        }
+
+        public int ReturnPhotoNumber()
+        {
+            return this.photoNumber;
+        }
+        #endregion
+
+        #region Fps
+        public void IncreaseFps()
+        {
+            this.fps++;
+        }
+
+        public void RestetFps()
+        {
+            this.fps = 0;
+        }
+
+        public int ReturnFps()
+        {
+            return this.fps;
+        }
+        #endregion
+
+        #region Color
+        public bool ReturnColor()
+        {
+            return this.colorful;
+        }
+
+        public void SetColor(bool color)
+        {
+            this.colorful = color;
+        }
+        #endregion
+
+
     }
 }
 

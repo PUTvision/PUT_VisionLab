@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5D630C89-3056-4E71-AD95-E6CAB097F505}</ProjectGuid>
+    <ProjectGuid>{D0B0BD5D-9BB3-4AD2-B246-D92A9D3E4085}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalibracjaKamery</RootNamespace>
@@ -36,6 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Basler\pylon 4\pylonc.net\bin\PylonC.NET.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="PylonC.NETSupportLibrary">
+      <HintPath>G:\kalibracja 1.2\PanelOsobny\bin\Debug\PylonC.NETSupportLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
@@ -70,16 +73,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MultiCamerasControler.cs">
+    <Compile Include="CamerasControler.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MultiCamerasControler.Designer.cs">
-      <DependentUpon>MultiCamerasControler.cs</DependentUpon>
+    <Compile Include="CamerasControler.Designer.cs">
+      <DependentUpon>CamerasControler.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MultiCamerasControler.resx">
-      <DependentUpon>MultiCamerasControler.cs</DependentUpon>
+    <EmbeddedResource Include="CamerasControler.resx">
+      <DependentUpon>CamerasControler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -118,24 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BaslerCenter\BaslerCenter.csproj">
-      <Project>{42bc6fb0-8252-4d41-ade4-c92949d04332}</Project>
-      <Name>BaslerCenter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CameraBase\CameraBase.csproj">
-      <Project>{402187ff-4b69-44ea-bec9-492ebd7ff244}</Project>
-      <Name>CameraBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CameraBasler\CameraBasler.csproj">
-      <Project>{89a3b507-78db-47fc-9730-f487e5aabb64}</Project>
-      <Name>CameraBasler</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Pylon.NETSupportLibrary\Pylon.NETSupportLibrary.csproj">
-      <Project>{3eafc9f5-d49f-4f9f-86c8-fbd231b07d2e}</Project>
-      <Name>Pylon.NETSupportLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

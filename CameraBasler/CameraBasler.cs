@@ -36,13 +36,17 @@ namespace PUTVision_CameraBasler
         #endregion
         public PYLON_DEVICE_HANDLE hDev = new PYLON_DEVICE_HANDLE();        /* Handles for the pylon devices. */
 
-        protected PylonBuffer<Byte> imageToSave = null;
+        byte[] imageToSave = null;
         protected EPylonPixelType pixelType = EPylonPixelType.PixelType_BayerBG8;
+        protected string path = System.Environment.CurrentDirectory + "\\";
+        protected string folderName = "NewFolder";
+        protected string fileName = "Name";
+        protected string fileFormat = "bmp";
         protected string overwritteNote = "";
         protected string alertNote = "";
         protected bool flagSave = false;
         protected bool flagWriteToDisk = false;
-        public bool zoomToFit = true;
+        protected bool zoomToFit = true;
 
         //protected bool reverseInAxisX = true;
 
@@ -103,32 +107,15 @@ namespace PUTVision_CameraBasler
         }
         #endregion
 
-        #region Set Image To Save
-        public void SetImageToSave(PylonBuffer<Byte> imagebuffer)
+        #region Image To Save
+        public void SetImageToSave(byte[] imagebuffer)
         {
             this.imageToSave = imagebuffer;
         }
 
-        public PylonBuffer<Byte> ReturnImageToSave()
+        public byte[] ReturnImageToSave()
         {
             return this.imageToSave;
-        }
-        #endregion
-
-        #region FPS
-        void IncreaseFPS()
-        {
-            this.fps++;
-        }
-
-        public void RestetFPS()
-        {
-            this.fps=0;
-        }
-
-        public int ReturnFPS()
-        {
-            return this.fps;
         }
         #endregion
 
@@ -160,32 +147,6 @@ namespace PUTVision_CameraBasler
         public void SetCameraName(string name)
         {
             this.cameraName=name;
-        }
-        #endregion
-
-        #region Freame size
-        
-        public void SetFrameSize(uint sizeX, uint sizeY)
-        {
-            this.frameWidth = sizeX;
-            this.frameHeight = sizeY;
-        }
-        public void ReturnFrameSize(out uint width, out uint Height)
-        {
-            width = this.frameWidth;
-            Height = this.frameHeight;
-        }
-        #endregion
-
-        #region Color
-        public bool ReturnColor()
-        {
-            return this.colorful;
-        }
-
-        public void SetColor(bool color)
-        {
-            this.colorful = color;
         }
         #endregion
 
@@ -271,7 +232,68 @@ namespace PUTVision_CameraBasler
         }
         #endregion
 
+        #region Path
+        public void SetPath(string newPath)
+        {
+            this.path = newPath;
+        }
 
+        public string ReturnPath()
+        {
+            return this.path;
+        }
+        #endregion
+
+        #region Folder Name
+        public void SetFolderName(string newFolderName)
+        {
+            this.folderName = newFolderName;
+        }
+
+        public string ReturnFolderName()
+        {
+            return this.folderName;
+        }
+        #endregion
+
+        #region File Name
+        public void SetFileName(string newFileName)
+        {
+            this.fileName = newFileName;
+        }
+
+        public string ReturnFileName()
+        {
+            return this.fileName;
+        }
+        #endregion
+
+        #region File Format
+        public void SetFileFormat(string newFileFormat)
+        {
+            this.fileFormat = newFileFormat;
+        }
+
+        public string ReturnFileFormat()
+        {
+            return this.fileFormat;
+        }
+        #endregion
+
+
+
+        public string ReturnCompletePathToSave()
+        {
+            string whereSave = this.path + this.folderName;
+            string fotoS = this. photoNumber.ToString();
+            int length = fotoS.Length;
+            for (int i = 0; i < 4 - length; i++)
+            {
+                fotoS = "0" + fotoS;
+            }
+            whereSave += "\\" + this.fileName + "_" + fotoS + "." + this.fileFormat;
+            return whereSave;
+        }
     }
 }
 class TimerCallbackWrapper

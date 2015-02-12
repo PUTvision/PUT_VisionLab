@@ -16,7 +16,7 @@ namespace KalibracjaKamery
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MultiCamerasControler());
+            Application.Run(new CamerasControler());
         }
     }
 }

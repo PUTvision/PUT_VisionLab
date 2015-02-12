@@ -19,15 +19,16 @@ namespace PUTVision_BaslerCenter
     {
         public CameraBasler[] cameras;
         protected uint NUM_DEVICES = 0;        /* Handles for the pylon devices. */
-        protected bool permissionToWork = true;
+        protected bool permissionToWork = false;
         protected bool working = false;
         public Thread live;
-
+        static PylonBuffer<byte> imgBuf = null;
         private BaslerCenter[] center;
 
         #region Constructors
         public BaslerCenter(uint NUM_DEV)
         {
+            
             this.cameras = new CameraBasler[NUM_DEV];        /* Handles for the pylon devices. */
             for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
             {
@@ -35,30 +36,34 @@ namespace PUTVision_BaslerCenter
             }
         }
 
-
+        public void addCameras(uint NUM_DEV)
+        {
+            this.cameras = new CameraBasler[NUM_DEV];        /* Handles for the pylon devices. */
+            for (int deviceIndex = 0; deviceIndex < NUM_DEV; ++deviceIndex)
+            {
+                this.cameras[deviceIndex] = new CameraBasler();
+            }
+        }
 
         public BaslerCenter(BaslerCenter[] center)
         {
             // TODO: Complete member initialization
             this.center = center;
         }
+
+        public BaslerCenter()
+        {
+            // TODO: Complete member initialization
+        }
         #endregion
 
         // think what to do with specialized open function...
         // (uint packetSize, GainAuto gainAuto, ExposureAuto exposureAuto, int exposureTimeAbs, AutoFunctionProfile autoFunctionProfile, int startingFrameDelay)
 
-        #region ICamer interface implementation
-        // explicit interface implementation is not preffered (i.e. (=tj./tzn. in Polish) with Amin_ICamera.ICamera. prefix) 
-
-        // dodać (do ogólnego):
-        // int numberOfCameras
-
-        #endregion
-
-        public void Start()
+        public void Multiviewer()
         {
 
-            if (true)//this.permissionToWork && !this.working)
+            if (this.NUM_DEVICES>0)//this.permissionToWork && !this.working)
             {
 
             int reservedeviceIndex = 0; /*if you can not open the camera, you will know which one*/
@@ -78,12 +83,12 @@ namespace PUTVision_BaslerCenter
                     PYLON_WAITOBJECT_HANDLE woTimer;/* Timer wait object. */
 
                     /* These are camera specific variables: */
-                    PYLON_STREAMGRABBER_HANDLE[] hGrabber = new PYLON_STREAMGRABBER_HANDLE[NUM_DEVICES]; /* Handle for the pylon stream grabber. */
-                    PYLON_WAITOBJECT_HANDLE[] hWait = new PYLON_WAITOBJECT_HANDLE[NUM_DEVICES];       /* Handle used for waiting for a grab to be finished. */
-                    uint[] payloadSize = new uint[NUM_DEVICES];                    /* Size of an image frame in bytes. */
-                    PylonGrabResult_t[] grabResult = new PylonGrabResult_t[NUM_DEVICES];        /* Stores the result of a grab operation. */
-                    uint[] nStreams = new uint[NUM_DEVICES];                       /* The number of streams provided by the device. */
-                    Dictionary<PYLON_STREAMBUFFER_HANDLE, PylonBuffer<Byte>>[] buffers = new Dictionary<PYLON_STREAMBUFFER_HANDLE, PylonBuffer<Byte>>[NUM_DEVICES]; /* Holds handles and buffers used for grabbing. */
+                    PYLON_STREAMGRABBER_HANDLE[] hGrabber = new PYLON_STREAMGRABBER_HANDLE[this.NUM_DEVICES]; /* Handle for the pylon stream grabber. */
+                    PYLON_WAITOBJECT_HANDLE[] hWait = new PYLON_WAITOBJECT_HANDLE[this.NUM_DEVICES];       /* Handle used for waiting for a grab to be finished. */
+                    uint[] payloadSize = new uint[this.NUM_DEVICES];                    /* Size of an image frame in bytes. */
+                    PylonGrabResult_t[] grabResult = new PylonGrabResult_t[this.NUM_DEVICES];        /* Stores the result of a grab operation. */
+                    uint[] nStreams = new uint[this.NUM_DEVICES];                       /* The number of streams provided by the device. */
+                    Dictionary<PYLON_STREAMBUFFER_HANDLE, PylonBuffer<Byte>>[] buffers = new Dictionary<PYLON_STREAMBUFFER_HANDLE, PylonBuffer<Byte>>[this.NUM_DEVICES]; /* Holds handles and buffers used for grabbing. */
 
 #if DEBUG
                     /* This is a special debug setting needed only for GigE cameras.
@@ -99,9 +104,9 @@ namespace PUTVision_BaslerCenter
                     uint numDevicesAvail = Pylon.EnumerateDevices();
 
 
-                    if (numDevicesAvail < NUM_DEVICES)
+                    if (numDevicesAvail < this.NUM_DEVICES)
                     {
-                        Console.Error.WriteLine("Found {0} devices. At least {1} devices needed to run this sample.", numDevicesAvail, NUM_DEVICES);
+                        Console.Error.WriteLine("Found {0} devices. At least {1} devices needed to run this sample.", numDevicesAvail, this.NUM_DEVICES);
                         throw new Exception("Not enough devices found.");
                     }
 
@@ -120,7 +125,7 @@ namespace PUTVision_BaslerCenter
                     Pylon.WaitObjectsAdd(wos, woTimer);
 
                     /* Open camera and set parameters. */
-                    for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
+                    for (deviceIndex = 0; deviceIndex < this.NUM_DEVICES; ++deviceIndex)
                     {
                         reservedeviceIndex=deviceIndex;
                         //this.cameras[deviceIndex].hDev = Pylon.CreateDeviceByIndex((uint)deviceIndex);
@@ -246,7 +251,7 @@ namespace PUTVision_BaslerCenter
                             */
 
                             Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCPSPacketSize", GIGE_PACKET_SIZE);
-                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCPD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * (NUM_DEVICES - 1));
+                            Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCPD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * (this.NUM_DEVICES - 1));
                             Pylon.DeviceSetIntegerFeature(this.cameras[deviceIndex].hDev, "GevSCFTD", (GIGE_PACKET_SIZE + GIGE_PROTOCOL_OVERHEAD) * deviceIndex);
                         }
                         else if (deviceClass == "Basler1394")
@@ -255,7 +260,7 @@ namespace PUTVision_BaslerCenter
 
                             /* We first divide the available bandwidth (4915 for FW400, 9830 for FW800)
                                by the number of devices we are using. */
-                            long newPacketSize = 4915 / NUM_DEVICES;
+                            long newPacketSize = 4915 / this.NUM_DEVICES;
                             long recommendedPacketSize = 0;
 
                             /* Get the recommended packet size from the camera. */
@@ -283,7 +288,7 @@ namespace PUTVision_BaslerCenter
                         }
 
                     }
-                    for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
+                    for (deviceIndex = 0; deviceIndex < this.NUM_DEVICES; ++deviceIndex)
                     {
                         /* Allocate and register buffers for grab. */
                         /* Determine the required size for the grab buffer. */
@@ -362,13 +367,13 @@ namespace PUTVision_BaslerCenter
                     /* Let the camera acquire images. */
                     //Pylon.DeviceFeatureFromString(this.cameras[deviceIndex].hDev, "UserSetSelector", "Default");
 
-                    for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
+                    for (deviceIndex = 0; deviceIndex < this.NUM_DEVICES; ++deviceIndex)
                     {
                         /* Let the camera acquire images. */
                         Pylon.DeviceExecuteCommandFeature(this.cameras[deviceIndex].hDev, "AcquisitionStart");
                     }
 
-                    /* Set the timer to 5 s and start it. */
+                    /* Set the timer to continous work and start it. */
                     timer.Change(Timeout.Infinite, Timeout.Infinite);
 
                     /* Counts the number of grabbed images. */
@@ -434,27 +439,29 @@ namespace PUTVision_BaslerCenter
                             }
 
                             /* Perform processing. */
-                            //basler[deviceIndex].sizeX= (uint)grabResult[woIndex].SizeX;
-
-                            // basler[deviceIndex].sizeY = (uint)grabResult[woIndex].SizeY;
+                            this.cameras[woIndex].SetFrameSize( (uint)grabResult[woIndex].SizeX, (uint)grabResult[woIndex].SizeY);
 
                             /* Display image */
-
                             Pylon.ImageWindowDisplayImage<Byte>(woIndex, buffer, grabResult[woIndex]);
 
-                            if (this.cameras[deviceIndex].ReturnZoomToFit())
+                            this.cameras[woIndex].IncreaseFps();
+
+
+                            imgBuf=buffer;
+
+                            if (this.cameras[woIndex].ReturnZoomToFit())
                             {
                                 System.Windows.Forms.SendKeys.SendWait("^{MULTIPLY}");
-                                this.cameras[deviceIndex].SetZoomToFit(false);
+                                this.cameras[woIndex].SetZoomToFit(false);
                             }
 
-                            if (this.cameras[deviceIndex].ReturnFlagSave())
+                            if (this.cameras[woIndex].ReturnFlagSave())
                             {
-                                this.cameras[deviceIndex].SetImageToSave(buffer);
-                                this.cameras[deviceIndex].SetFlagSave(false);
-                                this.cameras[deviceIndex].SetFlagWriteToDisk(true);
-                            }
 
+                                this.cameras[woIndex].SetImageToSave((byte[])imgBuf.Array.Clone());
+                                this.cameras[woIndex].SetFlagSave(false);
+                                this.cameras[woIndex].SetFlagWriteToDisk(true);
+                            }
 
                         }
                         else if (grabResult[woIndex].Status == EPylonGrabStatus.Failed)
@@ -466,8 +473,6 @@ namespace PUTVision_BaslerCenter
                         /* Once finished with the processing, requeue the buffer to be filled again. */
                         Pylon.StreamGrabberQueueBuffer(hGrabber[woIndex], grabResult[woIndex].hBuffer, bufferIndex);
 
-                        //basler[deviceIndex].fps++;
-
                         if (!this.permissionToWork)
                         {
                             break;
@@ -476,7 +481,7 @@ namespace PUTVision_BaslerCenter
 
                     /* Clean up. */
                     /* Stop the image aquisition on the cameras. */
-                    for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
+                    for (deviceIndex = 0; deviceIndex < this.NUM_DEVICES; ++deviceIndex)
                     {
                         /*  ... Stop the camera. */
                         Pylon.DeviceExecuteCommandFeature(this.cameras[deviceIndex].hDev, "AcquisitionStop");
@@ -487,7 +492,7 @@ namespace PUTVision_BaslerCenter
                     Pylon.WaitObjectDestroy(woTimer);
                     Pylon.WaitObjectsDestroy(wos);
 
-                    for (deviceIndex = 0; deviceIndex < NUM_DEVICES; ++deviceIndex)
+                    for (deviceIndex = 0; deviceIndex < this.NUM_DEVICES; ++deviceIndex)
                     {
                         /* ... We must issue a cancel call to ensure that all pending buffers are put into the
                            stream grabber's output queue. */
@@ -581,18 +586,30 @@ namespace PUTVision_BaslerCenter
         public void Recording()
         {
             this.permissionToWork = true;
-            this.live = new Thread(this.Start);
+            this.live = new Thread(this.Multiviewer);
             this.live.Start();
         }
 
-        #region Num_Devices
+        #region NUM_DEVICES
         public void SetNUM_DEVICES(uint num)
         {
             this.NUM_DEVICES = num;
         }
-        public uint SetNUM_DEVICES()
+        public uint ReturnNUM_DEVICES()
         {
             return this.NUM_DEVICES;
+        }
+        #endregion
+
+        #region PermissionToWork
+        public void SetPermissionToWork(bool value)
+        {
+            this.permissionToWork = value;
+        }
+
+        public bool ReturnPermissionToWork()
+        {
+            return this.permissionToWork;
         }
         #endregion
 
